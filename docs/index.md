@@ -1,12 +1,12 @@
-# ProjectName
+# Faithlife.Json
 
-**ProjectName** description
+**Faithlife.Json** description
 
 ## Installation
 
-ProjectName should be installed [via NuGet](https://www.nuget.org/packages/ProjectName).
+Faithlife.Json should be installed [via NuGet](https://www.nuget.org/packages/Faithlife.Json).
 
 ## Documentation
 
-* [Reference Documentation](ProjectName.md)
+* [Reference Documentation](Faithlife.Json.md)
 

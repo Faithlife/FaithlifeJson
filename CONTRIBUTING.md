@@ -1,4 +1,4 @@
-# Contributing to ProjectName
+# Contributing to Faithlife.Json
 
 ## Prerequisites
 
@@ -13,6 +13,6 @@
 
 ## How to Build
 
-* Clone the repository: `git clone https://github.com/Faithlife/RepoName.git`
-* `cd RepoName`
-* `dotnet test tests/ProjectName.Tests`
+* Clone the repository: `git clone https://github.com/Faithlife/FaithlifeJson.git`
+* `cd FaithlifeJson`
+* `dotnet test tests/Faithlife.Json.Tests`
