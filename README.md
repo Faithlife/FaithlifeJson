@@ -1,6 +1,6 @@
 # Faithlife.Json
 
-Description
+Helpers for working with JSON data.
 
 ## Build Status
 
