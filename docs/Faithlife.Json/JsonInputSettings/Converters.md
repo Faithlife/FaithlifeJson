@@ -3,7 +3,7 @@
 Gets or sets the converters.
 
 ```csharp
-public ReadOnlyCollection<JsonConverter> Converters { get; set; }
+public IReadOnlyList<JsonConverter> Converters { get; set; }
 ```
 
 ## Property Value

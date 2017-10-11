@@ -10,8 +10,7 @@ public class JsonInputSettings
 
 | name | description |
 | --- | --- |
-| [JsonInputSettings](JsonInputSettings/JsonInputSettings.md)() | Initializes a new instance of the [`JsonInputSettings`](JsonInputSettings.md) class. |
-| [JsonInputSettings](JsonInputSettings/JsonInputSettings.md)(…) | Initializes a new instance of the [`JsonInputSettings`](JsonInputSettings.md) class. (5 constructors) |
+| [JsonInputSettings](JsonInputSettings/JsonInputSettings.md)() | The default constructor. |
 | [ContractResolver](JsonInputSettings/ContractResolver.md) { get; set; } | Gets or sets the contract resolver. |
 | [Converters](JsonInputSettings/Converters.md) { get; set; } | Gets or sets the converters. |
 | [IgnoresExtraProperties](JsonInputSettings/IgnoresExtraProperties.md) { get; set; } | True if JSON properties without corresponding .NET object properties should be ignored. |
