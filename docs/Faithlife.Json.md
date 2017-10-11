@@ -1,7 +1,5 @@
 # Faithlife.Json assembly
 
-The assembly `Faithlife.Json.dll` has 21 public types in 2 namespaces.
-
 ## Faithlife.Json namespace
 
 | public type | description |
