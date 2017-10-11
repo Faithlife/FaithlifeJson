@@ -1,8 +1,22 @@
 # JsonFilter.JoinPropertyPaths&lt;TOwner&gt; method
 
+Joins the paths of the specified properties with the standard delimiter.
+
 ```csharp
 public static string JoinPropertyPaths<TOwner>(Expression<Func<TOwner, object>>[] expressions)
 ```
+
+| parameter | description |
+| --- | --- |
+| expressions | The property expressions. |
+
+## Return Value
+
+The joined paths of the specified properties.
+
+## Remarks
+
+The returned paths are always lowercase.
 
 ## See Also
 

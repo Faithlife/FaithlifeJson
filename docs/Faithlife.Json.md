@@ -1,20 +1,12 @@
 # Faithlife.Json assembly
 
-The assembly `Faithlife.Json.dll` has 21 public types in 2 namespaces.
-
 ## Faithlife.Json namespace
 
 | public type | description |
 | --- | --- |
-| class [DefaultValueDefaultAttribute](Faithlife.Json/DefaultValueDefaultAttribute.md) | Sets the DefaultValue to default(T) for the specified type. |
 | class [JsonFilter](Faithlife.Json/JsonFilter.md) | Filters data from JSON. |
 | class [JsonInputSettings](Faithlife.Json/JsonInputSettings.md) | Settings for JsonUtility.FromJson. |
 | class [JsonOutputSettings](Faithlife.Json/JsonOutputSettings.md) | Settings for JsonUtility.ToJson. |
-| class [JsonPatch](Faithlife.Json/JsonPatch.md) | Encapsulates a JSON patch. |
-| class [JsonPatchException](Faithlife.Json/JsonPatchException.md) | A JSON patch exception. |
-| class [JsonPatchOperation](Faithlife.Json/JsonPatchOperation.md) | A JSON patch operation. |
-| enum [JsonPatchOperationKind](Faithlife.Json/JsonPatchOperationKind.md) | The kind of JSON patch operation. |
-| class [JsonPointer](Faithlife.Json/JsonPointer.md) | Points to a specific node within a JSON document. |
 | static class [JsonUtility](Faithlife.Json/JsonUtility.md) | Helper methods for working with Json.NET. |
 | static class [JTokenUtility](Faithlife.Json/JTokenUtility.md) | Utility methods for JToken. |
 

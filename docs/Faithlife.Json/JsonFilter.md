@@ -30,9 +30,9 @@ public sealed class JsonFilter
 | static [ExcludePath](JsonFilter/ExcludePath.md)(…) | Excludes the specified path with the standard prefix. |
 | static [GetExcludedPropertyPath&lt;TOwner&gt;](JsonFilter/GetExcludedPropertyPath.md)(…) | Gets the excluded path of the specified property. |
 | static [GetPropertyPath&lt;TOwner&gt;](JsonFilter/GetPropertyPath.md)(…) | Gets the path of the specified property. |
-| static [JoinExcludedPropertyPaths&lt;TOwner&gt;](JsonFilter/JoinExcludedPropertyPaths.md)(…) |  |
+| static [JoinExcludedPropertyPaths&lt;TOwner&gt;](JsonFilter/JoinExcludedPropertyPaths.md)(…) | Joins the excluded paths of the specified properties with the standard delimiter. |
 | static [JoinPaths](JsonFilter/JoinPaths.md)(…) | Joins the specified paths with the standard delimiter. (2 methods) |
-| static [JoinPropertyPaths&lt;TOwner&gt;](JsonFilter/JoinPropertyPaths.md)(…) |  |
+| static [JoinPropertyPaths&lt;TOwner&gt;](JsonFilter/JoinPropertyPaths.md)(…) | Joins the paths of the specified properties with the standard delimiter. |
 
 ## See Also
 
