@@ -1,7 +1,3 @@
-name^first
-{"name":{"first":"Ed","last":"Ball"},"lang":"en"}
-{"name":{"first":"Ed"},"lang":"en"}
-
 yes
 null
 null
@@ -106,10 +102,6 @@ name.first,name.middle,lang
 {"name":{"first":"Ed","last":"Ball"},"lang":"en"}
 {"name":{"first":"Ed"},"lang":"en"}
 
-name,name.first
-{"name":{"first":"Ed","last":"Ball"},"lang":"en"}
-{"name":{"first":"Ed"}}
-
 name.first,name
 {"name":{"first":"Ed","last":"Ball"},"lang":"en"}
 {"name":{"first":"Ed"}}
@@ -173,10 +165,6 @@ null
 !yes,!no
 {"yes":true,"no":false}
 {}
-
-!name
-{"name":{"first":"Ed","last":"Ball"},"lang":"en"}
-{"lang":"en"}
 
 !name.first
 {"name":{"first":"Ed","last":"Ball"},"lang":"en"}
