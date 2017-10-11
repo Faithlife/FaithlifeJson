@@ -1,9 +1,9 @@
-# JsonFilter.AlternatePathSepartor field
+# JsonFilter.AlternatePathSeparator field
 
 Alternate character used to separate paths.
 
 ```csharp
-public const char AlternatePathSepartor;
+public const char AlternatePathSeparator;
 ```
 
 ## See Also

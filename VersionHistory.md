@@ -11,6 +11,7 @@ Prefix the description of the change with `[major]`, `[minor]` or `[patch]` in a
 * [major] Remove `DefaultValueDefaultAttribute`.
 * [major] Remove `JsonPointer` and `JsonPatch`.
 * [major] Simplify `JsonInputSettings` and `JsonOutputSettings`.
+* [major] Rename `JsonFilter.AlternatePathSepartor` to `AlternatePathSeparator`.
 
 ## Released
 

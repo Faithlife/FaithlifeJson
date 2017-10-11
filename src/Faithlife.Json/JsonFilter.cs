@@ -220,7 +220,7 @@ namespace Faithlife.Json
 		/// <summary>
 		/// Alternate character used to separate paths.
 		/// </summary>
-		public const char AlternatePathSepartor = ';';
+		public const char AlternatePathSeparator = ';';
 
 		/// <summary>
 		/// Character used to open a group.
@@ -1173,7 +1173,7 @@ namespace Faithlife.Json
 			int m_reentrancy;
 		}
 
-		static readonly char[] s_pathSeparators = { PathSeparator, AlternatePathSepartor, GroupOpener, GroupCloser };
+		static readonly char[] s_pathSeparators = { PathSeparator, AlternatePathSeparator, GroupOpener, GroupCloser };
 
 		readonly FilterNode m_rootNode;
 	}

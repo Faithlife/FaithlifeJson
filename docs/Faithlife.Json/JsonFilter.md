@@ -20,7 +20,7 @@ public sealed class JsonFilter
 | [IsPathIncluded](JsonFilter/IsPathIncluded.md)(…) | Determines if the specified path is included by the filter. |
 | [IsPropertyIncluded&lt;TOwner&gt;](JsonFilter/IsPropertyIncluded.md)(…) | Determines if the specified property is included by the filter. |
 | override [ToString](JsonFilter/ToString.md)() | Converts the filter to a parsable string. |
-| const [AlternatePathSepartor](JsonFilter/AlternatePathSepartor.md) | Alternate character used to separate paths. |
+| const [AlternatePathSeparator](JsonFilter/AlternatePathSeparator.md) | Alternate character used to separate paths. |
 | const [AnyProperty](JsonFilter/AnyProperty.md) | String used to indicate any property. |
 | const [ExcludePrefix](JsonFilter/ExcludePrefix.md) | Character used to exclude a path. |
 | const [GroupCloser](JsonFilter/GroupCloser.md) | Character used to close a group. |
