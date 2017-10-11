@@ -22,7 +22,7 @@
     <SourceLinkOriginUrl>https://github.com/Faithlife/FaithlifeJson.git</SourceLinkOriginUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Faithlife.Utility" Version="0.3.0" />
+    <PackageReference Include="Faithlife.Utility" Version="0.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="SourceLink.Create.GitHub" Version="2.1.0" PrivateAssets="all" />
     <PackageReference Include="SourceLink.Test" Version="2.1.0" PrivateAssets="all" />

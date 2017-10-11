@@ -614,11 +614,13 @@ namespace Faithlife.Json
 			}
 		}
 
-		static readonly ReadOnlyCollection<JsonConverter> s_defaultConverters =
-			ListUtility.CreateReadOnlyCollection<JsonConverter>(
+		private static readonly ReadOnlyCollection<JsonConverter> s_defaultConverters =
+			new JsonConverter[]
+			{
 				new CamelCaseEnumJsonConverter(),
 				new IsoDateTimeUtcJsonConverter(),
 				new IsoDateTimeOffsetJsonConverter(),
-				new DictionaryKeysAreNotPropertyNamesJsonConverter()); // NOTE: must be after any other dictionary converters
+				new DictionaryKeysAreNotPropertyNamesJsonConverter(), // NOTE: must be after any other dictionary converters
+			}.AsReadOnly();
 	}
 }
