@@ -119,7 +119,7 @@ namespace Faithlife.Json.Tests
 			Assert.IsNull(JsonFilter.Parse("name,!name.middle").FilterObject((PersonDto) null));
 		}
 
-		[Test, TestCaseSource("GetTestCases")]
+		[Test, TestCaseSource(nameof(GetTestCases))]
 		public void FilterTests(string filterText, string rootPath, string before, string after)
 		{
 			JsonFilter filter = JsonFilter.TryParse(filterText, rootPath);
