@@ -4,7 +4,6 @@
 
 | public type | description |
 | --- | --- |
-| class [DefaultValueDefaultAttribute](Faithlife.Json/DefaultValueDefaultAttribute.md) | Sets the DefaultValue to default(T) for the specified type. |
 | class [JsonFilter](Faithlife.Json/JsonFilter.md) | Filters data from JSON. |
 | class [JsonInputSettings](Faithlife.Json/JsonInputSettings.md) | Settings for JsonUtility.FromJson. |
 | class [JsonOutputSettings](Faithlife.Json/JsonOutputSettings.md) | Settings for JsonUtility.ToJson. |
