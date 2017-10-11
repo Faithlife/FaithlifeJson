@@ -9,6 +9,7 @@ Prefix the description of the change with `[major]`, `[minor]` or `[patch]` in a
 
 * Change .NET Framework minimum version to 4.6.1.
 * [major] Remove `DefaultValueDefaultAttribute`.
+* [major] Remove `JsonPointer` and `JsonPatch`.
 
 ## Released
 
