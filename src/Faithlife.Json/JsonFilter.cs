@@ -39,7 +39,7 @@ namespace Faithlife.Json
 		/// with the specified root path, if specified.</remarks>
 		public static JsonFilter TryParse(string value, string rootPath)
 		{
-			if (value.IsNullOrWhiteSpace())
+			if (string.IsNullOrWhiteSpace(value))
 				return Empty;
 
 			var paths = new List<PropertyPath>();
@@ -270,7 +270,7 @@ namespace Faithlife.Json
 			if (paths == null)
 				throw new ArgumentNullException("paths");
 
-			return paths.Join(PathSeparator);
+			return paths.Join(PathSeparator.ToString());
 		}
 
 		/// <summary>
@@ -448,7 +448,7 @@ namespace Faithlife.Json
 
 			public static PropertyPath TryParse(string fullName, string rootPath)
 			{
-				string prefix = rootPath.IsNullOrWhiteSpace() ? "" : (rootPath.Trim() + PropertySeparator);
+				string prefix = string.IsNullOrWhiteSpace(rootPath) ? "" : (rootPath.Trim() + PropertySeparator);
 
 				var parts = (prefix + fullName).Split(new[] { PropertySeparator }, StringSplitOptions.None).Select(x => x.Trim()).ToList();
 				bool isExcluded = false;

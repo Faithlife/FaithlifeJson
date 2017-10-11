@@ -1,107 +1,10 @@
-# JsonOutputSettings constructor (1 of 6)
+# JsonOutputSettings constructor
 
-Initializes a new instance of the [`JsonOutputSettings`](../JsonOutputSettings.md) class.
+The default constructor.
 
 ```csharp
 public JsonOutputSettings()
 ```
-
-## See Also
-
-* class [JsonOutputSettings](../JsonOutputSettings.md)
-* namespace [Faithlife.Json](../../Faithlife.Json.md)
-
----
-
-# JsonOutputSettings constructor (2 of 6)
-
-Initializes a new instance of the [`JsonOutputSettings`](../JsonOutputSettings.md) class.
-
-```csharp
-public JsonOutputSettings(IEnumerable<JsonConverter> converters)
-```
-
-| parameter | description |
-| --- | --- |
-| converters | The converters to use, if any. |
-
-## See Also
-
-* class [JsonOutputSettings](../JsonOutputSettings.md)
-* namespace [Faithlife.Json](../../Faithlife.Json.md)
-
----
-
-# JsonOutputSettings constructor (3 of 6)
-
-Initializes a new instance of the [`JsonOutputSettings`](../JsonOutputSettings.md) class.
-
-```csharp
-public JsonOutputSettings(JsonConverter[] converters)
-```
-
-| parameter | description |
-| --- | --- |
-| converters | The converters to use, if any. |
-
-## See Also
-
-* class [JsonOutputSettings](../JsonOutputSettings.md)
-* namespace [Faithlife.Json](../../Faithlife.Json.md)
-
----
-
-# JsonOutputSettings constructor (4 of 6)
-
-Initializes a new instance of the [`JsonOutputSettings`](../JsonOutputSettings.md) class.
-
-```csharp
-public JsonOutputSettings(JsonOutputSettings settings)
-```
-
-| parameter | description |
-| --- | --- |
-| settings | The settings to copy from, if any. |
-
-## See Also
-
-* class [JsonOutputSettings](../JsonOutputSettings.md)
-* namespace [Faithlife.Json](../../Faithlife.Json.md)
-
----
-
-# JsonOutputSettings constructor (5 of 6)
-
-Initializes a new instance of the [`JsonOutputSettings`](../JsonOutputSettings.md) class.
-
-```csharp
-public JsonOutputSettings(JsonOutputSettings settings, IEnumerable<JsonConverter> converters)
-```
-
-| parameter | description |
-| --- | --- |
-| settings | The settings to copy from, if any. |
-| converters | The converters to use, if any. |
-
-## See Also
-
-* class [JsonOutputSettings](../JsonOutputSettings.md)
-* namespace [Faithlife.Json](../../Faithlife.Json.md)
-
----
-
-# JsonOutputSettings constructor (6 of 6)
-
-Initializes a new instance of the [`JsonOutputSettings`](../JsonOutputSettings.md) class.
-
-```csharp
-public JsonOutputSettings(JsonOutputSettings settings, JsonConverter[] converters)
-```
-
-| parameter | description |
-| --- | --- |
-| settings | The settings to copy from, if any. |
-| converters | The converters to use, if any. |
 
 ## See Also
 

@@ -49,11 +49,11 @@ namespace Faithlife.Json.Tests
 		public void OverrideConverter()
 		{
 			Widget widget = new Widget { Title = "title", Kind = new WidgetKind { WeightInGrams = 1.2, ReleaseDate = new DateTime(2010, 9, 8, 7, 6, 5, DateTimeKind.Utc) } };
-			Assert.AreEqual(JsonUtility.ToJson(widget, new JsonOutputSettings(new IsoDateOnlyJsonConverter())),
+			Assert.AreEqual(JsonUtility.ToJson(widget, new JsonOutputSettings { Converters = new[] { new IsoDateOnlyJsonConverter() } }),
 				@"{""title"":""title"",""kind"":{""weightInGrams"":1.2,""releaseDate"":""2010-09-08""}}");
 
 			widget = JsonUtility.FromJson<Widget>(
-				@"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12""},""title"":""whatever""}", new JsonInputSettings(new IsoDateOnlyJsonConverter()));
+				@"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12""},""title"":""whatever""}", new JsonInputSettings { Converters = new[] { new IsoDateOnlyJsonConverter() } });
 			Assert.AreEqual(widget.Title, "whatever");
 			Assert.AreEqual(widget.Kind.ReleaseDate.Day, 12);
 		}

@@ -10,8 +10,7 @@ public class JsonOutputSettings
 
 | name | description |
 | --- | --- |
-| [JsonOutputSettings](JsonOutputSettings/JsonOutputSettings.md)() | Initializes a new instance of the [`JsonOutputSettings`](JsonOutputSettings.md) class. |
-| [JsonOutputSettings](JsonOutputSettings/JsonOutputSettings.md)(…) | Initializes a new instance of the [`JsonOutputSettings`](JsonOutputSettings.md) class. (5 constructors) |
+| [JsonOutputSettings](JsonOutputSettings/JsonOutputSettings.md)() | The default constructor. |
 | [ContractResolver](JsonOutputSettings/ContractResolver.md) { get; set; } | Gets or sets the contract resolver. |
 | [Converters](JsonOutputSettings/Converters.md) { get; set; } | Gets or sets the converters. |
 | [IsIndented](JsonOutputSettings/IsIndented.md) { get; set; } | True if the JSON should be indented. |
