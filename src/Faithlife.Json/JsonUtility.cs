@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -614,13 +613,13 @@ namespace Faithlife.Json
 			}
 		}
 
-		private static readonly ReadOnlyCollection<JsonConverter> s_defaultConverters =
+		private static readonly IReadOnlyList<JsonConverter> s_defaultConverters =
 			new JsonConverter[]
 			{
 				new CamelCaseEnumJsonConverter(),
 				new IsoDateTimeUtcJsonConverter(),
 				new IsoDateTimeOffsetJsonConverter(),
 				new DictionaryKeysAreNotPropertyNamesJsonConverter(), // NOTE: must be after any other dictionary converters
-			}.AsReadOnly();
+			};
 	}
 }
