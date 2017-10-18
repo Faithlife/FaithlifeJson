@@ -188,5 +188,77 @@ namespace Faithlife.Json.Tests
 			Assert.IsNull(JToken.Parse("{\"key\":1}").TryGetValue(null));
 			Assert.AreEqual(JToken.Parse("{\"\":1}").TryGetValue("").AsInt32(), 1);
 		}
+
+		[TestCase(@"null", @"null", true)]
+		[TestCase(@"null", @"false", false)]
+		[TestCase(@"false", @"null", false)]
+		[TestCase(@"true", @"false", false)]
+		[TestCase(@"true", @"true", true)]
+		[TestCase(@"false", @"0", false)]
+		[TestCase(@"0", @"0", true)]
+		[TestCase(@"1.2", @"1.2", true)]
+		[TestCase(@"1.2", @"1.0", false)]
+		[TestCase(@"1.2", @"1", false)]
+		[TestCase(@"{""baz"":""qux"",""foo"":""bar""}", @"{""foo"":""bar"",""baz"":""qux""}", true)]
+		[TestCase(@"{""baz"":""qux"",""foo"":""baz""}", @"{""foo"":""bar"",""baz"":""qux""}", false)]
+		[TestCase(@"{""baz"":""qux""}", @"{""foo"":""bar"",""baz"":""qux""}", false)]
+		[TestCase(@"{""baz"":""qux""}", @"{""baz"":""bar""}", false)]
+		[TestCase(@"{""baz"":""qux""}", @"{""foo"":""bar""}", false)]
+		[TestCase(@"[""baz"",""qux""]", @"[""baz"",""qux""]", true)]
+		[TestCase(@"[""qux"",""baz""]", @"[""baz"",""qux""]", false)]
+		[TestCase(@"[[[]]]", @"[[[]]]", true)]
+		[TestCase(@"[[[]]]", @"[[]]", false)]
+		public void JTokenEquality(string beforeJson, string afterJson, bool areEqual)
+		{
+			JToken before = JsonUtility.FromJson<JToken>(beforeJson);
+			JToken after = JsonUtility.FromJson<JToken>(afterJson);
+			Assert.AreEqual(JTokenUtility.EqualityComparer.Equals(before, after), areEqual);
+			Assert.AreEqual(JTokenUtility.EqualityComparer.Equals(after, before), areEqual);
+			if (areEqual)
+				Assert.AreEqual(JTokenUtility.EqualityComparer.GetHashCode(before), JTokenUtility.EqualityComparer.GetHashCode(after));
+		}
+
+		[Test]
+		public void JTokenNullEquality()
+		{
+			// check weird edge cases
+			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(null, null));
+			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((object) null), null));
+			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((string) null), null));
+			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((string) null), new JValue((object) null)));
+		}
+
+		[Test]
+		public void JObjectClone()
+		{
+			JObject before = JsonUtility.FromJson<JObject>(@"{""baz"":""qux"",""foo"":""bar""}");
+			JObject after = JTokenUtility.Clone(before);
+			Assert.IsTrue(JTokenUtility.AreEqual(before, after));
+			Assert.AreNotSame(before, after);
+		}
+
+		[Test]
+		public void JTokenPersistentHashCode()
+		{
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(null), 10);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JValue((object) null)), 10);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JValue((string) null)), 10);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(false), -76102637);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(true), -142453839);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(""), 1028947972);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode("hi"), -1608206286);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(123), 567975604);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((short) 123), 567975604);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((long) 123), 567975604);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((double) 123), 1436994632);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((float) 123), 1436994632);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((decimal) 123), 1436994632);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JObject()), 1430463807);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JObject { { "hi", 123 }, { "there", 456 } }), 2095528233);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JObject { { "there", 456 }, { "hi", 123 } }), 2095528233);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JArray()), -295539510);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JArray("hi", 123)), -1744639852);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JArray(123, "hi")), 1821679800);
+		}
 	}
 }
