@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Faithlife.Json.Converters;
 using Faithlife.Utility;
@@ -17,12 +16,6 @@ namespace Faithlife.Json
 	/// </summary>
 	public static class JsonUtility
 	{
-		/// <summary>
-		/// An equality comparer for JToken.
-		/// </summary>
-		/// <remarks>This comparer ignores the order of object properties.</remarks>
-		public static readonly IEqualityComparer<JToken> JTokenEqualityComparer = new OurJTokenEqualityComparer();
-
 		/// <summary>
 		/// Converts the object to JSON.
 		/// </summary>
@@ -435,57 +428,6 @@ namespace Faithlife.Json
 		}
 
 		/// <summary>
-		/// Gets a persistent hash code for the token.
-		/// </summary>
-		/// <param name="token">The token, which must not be <c>null</c>.</param>
-		/// <returns>The persistent hash code.</returns>
-		public static int GetPersistentHashCode(JToken token)
-		{
-			// return hard-coded hash code for null
-			if (token.IsNull())
-				return 10;
-
-			JTokenType tokenType = token.Type;
-
-			// compare arrays
-			if (tokenType == JTokenType.Array)
-			{
-				// combine type hash code with hash codes for elements
-				IList<JToken> list = (IList<JToken>) token;
-				int[] hashCodes = new int[list.Count + 1];
-				hashCodes[0] = 2;
-				for (int index = 0; index < list.Count; index++)
-					hashCodes[index + 1] = GetPersistentHashCode(list[index]);
-				return HashCodeUtility.CombineHashCodes(hashCodes);
-			}
-
-			// compare objects
-			if (tokenType == JTokenType.Object)
-			{
-				// use XOR so that order doesn't matter
-				IDictionary<string, JToken> properties = (IDictionary<string, JToken>) token;
-				int hashCode = 0;
-				foreach (KeyValuePair<string, JToken> property in properties)
-					hashCode ^= HashCodeUtility.CombineHashCodes(property.Key.GetPersistentHashCode(), GetPersistentHashCode(property.Value));
-
-				// combine type hash code with hash codes for properties
-				return HashCodeUtility.CombineHashCodes(1, hashCode);
-			}
-
-			// combine type hash code with hash code for string
-			if (tokenType == JTokenType.String)
-				return HashCodeUtility.CombineHashCodes(8, ((string) token).GetPersistentHashCode());
-
-			// combine type hash code with hash code for bool
-			if (tokenType == JTokenType.Boolean)
-				return HashCodeUtility.CombineHashCodes(9, HashCodeUtility.GetPersistentHashCode((bool) token));
-
-			// return hash code of string representation of anything else (e.g. numbers)
-			string tokenAsString = token.ToString(Formatting.None);
-			return tokenAsString.GetPersistentHashCode();
-		}
-
-		/// <summary>
 		/// Gets the JSON formatting specified by the settings.
 		/// </summary>
 		/// <param name="settings">The settings.</param>
@@ -493,17 +435,6 @@ namespace Faithlife.Json
 		public static Formatting GetJsonFormatting(JsonOutputSettings settings)
 		{
 			return settings != null && settings.IsIndented ? Formatting.Indented : Formatting.None;
-		}
-
-		/// <summary>
-		/// Clones the specified Json.NET token.
-		/// </summary>
-		/// <typeparam name="T">The type of token.</typeparam>
-		/// <param name="token">The token.</param>
-		/// <returns>The clone.</returns>
-		public static T Clone<T>(T token) where T : JToken
-		{
-			return token == null ? null : (T) token.DeepClone();
 		}
 
 		private static JsonSerializerSettings DoCreateDefaultJsonSerializerSettings(JsonInputSettings inputSettings, JsonOutputSettings outputSettings)
@@ -540,77 +471,6 @@ namespace Faithlife.Json
 			if (value == null && type == typeof(JToken))
 				value = new JValue((object) null);
 			return value;
-		}
-
-		private sealed class OurJTokenEqualityComparer : IEqualityComparer<JToken>
-		{
-			public bool Equals(JToken left, JToken right)
-			{
-				if (object.ReferenceEquals(left, right))
-					return true;
-
-				if (left.IsNull())
-					return right.IsNull();
-				else if (right.IsNull())
-					return false;
-
-				JTokenType leftType = left.Type;
-				JTokenType rightType = right.Type;
-
-				// compare arrays
-				if (leftType == JTokenType.Array)
-				{
-					if (rightType != JTokenType.Array)
-						return false;
-
-					JArray leftArray = (JArray) left;
-					JArray rightArray = (JArray) right;
-
-					// check count then items
-					return leftArray.Count == rightArray.Count && leftArray.SequenceEqual(rightArray, this);
-				}
-
-				// compare objects
-				if (leftType == JTokenType.Object)
-				{
-					if (rightType != JTokenType.Object)
-						return false;
-
-					IDictionary<string, JToken> leftProperties = (IDictionary<string, JToken>) left;
-					IDictionary<string, JToken> rightProperties = (IDictionary<string, JToken>) right;
-
-					// check count first
-					if (leftProperties.Count != rightProperties.Count)
-						return false;
-
-					// allow properties to be in any order, but make sure they have the same names and values
-					foreach (KeyValuePair<string, JToken> leftProperty in leftProperties)
-					{
-						JToken rightValue;
-						if (!rightProperties.TryGetValue(leftProperty.Key, out rightValue))
-							return false;
-						if (!Equals(leftProperty.Value, rightValue))
-							return false;
-					}
-					return true;
-				}
-
-				// compare strings ordinally
-				if (leftType == JTokenType.String)
-					return rightType == JTokenType.String && (string) left == (string) right;
-
-				// compare Booleans
-				if (leftType == JTokenType.Boolean)
-					return rightType == JTokenType.Boolean && (bool) left == (bool) right;
-
-				// compare string representations of anything else (e.g. numbers)
-				return left.ToString(Formatting.None) == right.ToString(Formatting.None);
-			}
-
-			public int GetHashCode(JToken token)
-			{
-				return token == null ? 0 : GetPersistentHashCode(token);
-			}
 		}
 
 		private static readonly IReadOnlyList<JsonConverter> s_defaultConverters =

@@ -99,69 +99,6 @@ namespace Faithlife.Json.Tests
 			Assert.AreEqual(JsonUtility.ToJson(jToken), jsonFrom);
 		}
 
-		[TestCase(@"null", @"null", true)]
-		[TestCase(@"null", @"false", false)]
-		[TestCase(@"false", @"null", false)]
-		[TestCase(@"true", @"false", false)]
-		[TestCase(@"true", @"true", true)]
-		[TestCase(@"false", @"0", false)]
-		[TestCase(@"0", @"0", true)]
-		[TestCase(@"1.2", @"1.2", true)]
-		[TestCase(@"1.2", @"1.0", false)]
-		[TestCase(@"1.2", @"1", false)]
-		[TestCase(@"{""baz"":""qux"",""foo"":""bar""}", @"{""foo"":""bar"",""baz"":""qux""}", true)]
-		[TestCase(@"{""baz"":""qux"",""foo"":""baz""}", @"{""foo"":""bar"",""baz"":""qux""}", false)]
-		[TestCase(@"{""baz"":""qux""}", @"{""foo"":""bar"",""baz"":""qux""}", false)]
-		[TestCase(@"{""baz"":""qux""}", @"{""baz"":""bar""}", false)]
-		[TestCase(@"{""baz"":""qux""}", @"{""foo"":""bar""}", false)]
-		[TestCase(@"[""baz"",""qux""]", @"[""baz"",""qux""]", true)]
-		[TestCase(@"[""qux"",""baz""]", @"[""baz"",""qux""]", false)]
-		[TestCase(@"[[[]]]", @"[[[]]]", true)]
-		[TestCase(@"[[[]]]", @"[[]]", false)]
-		public void JTokenEquality(string beforeJson, string afterJson, bool areEqual)
-		{
-			JToken before = JsonUtility.FromJson<JToken>(beforeJson);
-			JToken after = JsonUtility.FromJson<JToken>(afterJson);
-			Assert.AreEqual(JsonUtility.JTokenEqualityComparer.Equals(before, after), areEqual);
-			Assert.AreEqual(JsonUtility.JTokenEqualityComparer.Equals(after, before), areEqual);
-			if (areEqual)
-				Assert.AreEqual(JsonUtility.JTokenEqualityComparer.GetHashCode(before), JsonUtility.JTokenEqualityComparer.GetHashCode(after));
-		}
-
-		[Test]
-		public void JTokenNullEquality()
-		{
-			// check weird edge cases
-			Assert.IsTrue(JsonUtility.JTokenEqualityComparer.Equals(null, null));
-			Assert.IsTrue(JsonUtility.JTokenEqualityComparer.Equals(new JValue((object) null), null));
-			Assert.IsTrue(JsonUtility.JTokenEqualityComparer.Equals(new JValue((string) null), null));
-			Assert.IsTrue(JsonUtility.JTokenEqualityComparer.Equals(new JValue((string) null), new JValue((object) null)));
-		}
-
-		[Test]
-		public void JTokenPersistentHashCode()
-		{
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(null), 10);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(new JValue((object) null)), 10);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(new JValue((string) null)), 10);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(false), -76102637);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(true), -142453839);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(""), 1028947972);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode("hi"), -1608206286);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(123), 567975604);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode((short) 123), 567975604);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode((long) 123), 567975604);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode((double) 123), 1436994632);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode((float) 123), 1436994632);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode((decimal) 123), 1436994632);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(new JObject()), 1430463807);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(new JObject { { "hi", 123 }, { "there", 456 } }), 2095528233);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(new JObject { { "there", 456 }, { "hi", 123 } }), 2095528233);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(new JArray()), -295539510);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(new JArray("hi", 123)), -1744639852);
-			Assert.AreEqual(JsonUtility.GetPersistentHashCode(new JArray(123, "hi")), 1821679800);
-		}
-
 		private static void TestToAndFromJson<T>(T value, string json)
 		{
 			Assert.AreEqual(JsonUtility.ToJson(value), json);
