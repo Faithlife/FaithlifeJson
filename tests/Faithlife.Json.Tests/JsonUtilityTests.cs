@@ -99,12 +99,6 @@ namespace Faithlife.Json.Tests
 			Assert.AreEqual(JsonUtility.ToJson(jToken), jsonFrom);
 		}
 
-		private static void TestToAndFromJson<T>(T value, string json)
-		{
-			Assert.AreEqual(JsonUtility.ToJson(value), json);
-			Assert.AreEqual(JsonUtility.FromJson<T>(json), value);
-		}
-
 		[Test]
 		public void JsonNet40r7Bug()
 		{
