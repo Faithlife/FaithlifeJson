@@ -71,10 +71,9 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void ExtraProperty()
 		{
-			Widget widget = null;
 			const string jsonWithExtraProperty = @"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12T13:14:15Z""},""title"":""whatever"",""version"":2}";
-			Assert.Throws<JsonSerializationException>(() => widget = JsonUtility.FromJson<Widget>(jsonWithExtraProperty));
-			widget = JsonUtility.FromJson<Widget>(jsonWithExtraProperty, new JsonInputSettings { IgnoresExtraProperties = true });
+			Assert.Throws<JsonSerializationException>(() => JsonUtility.FromJson<Widget>(jsonWithExtraProperty));
+			Widget widget = JsonUtility.FromJson<Widget>(jsonWithExtraProperty, new JsonInputSettings { IgnoresExtraProperties = true });
 			Assert.AreEqual(widget.Title, "whatever");
 			Assert.AreEqual(widget.Kind.ReleaseDate.Second, 15);
 		}
@@ -100,7 +99,7 @@ namespace Faithlife.Json.Tests
 		}
 
 		[Test]
-		public void JsonNet40r7Bug()
+		public void JsonNet40R7Bug()
 		{
 			HasNullableValue hasNullableValue = new HasNullableValue { Value = new SomeValue { Text = "hi" } };
 			Assert.AreEqual(JsonUtility.ToJson(hasNullableValue), @"{""value"":""hi""}");
