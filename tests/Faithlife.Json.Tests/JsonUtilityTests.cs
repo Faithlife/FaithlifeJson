@@ -78,6 +78,14 @@ namespace Faithlife.Json.Tests
 			Assert.AreEqual(widget.Kind.ReleaseDate.Second, 15);
 		}
 
+		[Test]
+		public void IgnoreRefProperty()
+		{
+			const string jsonWithRefProperty = @"{""$ref"":""whatever""}";
+			var value = JsonUtility.FromJson<HasRefProperty>(jsonWithRefProperty);
+			Assert.AreEqual(value.Ref, "whatever");
+		}
+
 		[TestCase(@"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12T13:14:15Z""},""title"":""whatever""}", JTokenType.Object)]
 		[TestCase(@"{}", JTokenType.Object)]
 		[TestCase(@"[3,1,4,1,5,9]", JTokenType.Array)]
@@ -128,6 +136,12 @@ namespace Faithlife.Json.Tests
 		public struct SomeValue
 		{
 			public string Text { get; set; }
+		}
+
+		public class HasRefProperty
+		{
+			[JsonProperty("$ref")]
+			public string Ref { get; set; }
 		}
 
 		public class SomeValueJsonConverter : JsonConverter

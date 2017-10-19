@@ -448,7 +448,8 @@ namespace Faithlife.Json
 					ContractResolver = inputSettings.ContractResolver ?? outputSettings.ContractResolver ?? new CamelCasePropertyNamesContractResolver(),
 					DateParseHandling = DateParseHandling.None,
 					NullValueHandling = inputSettings.IncludesNullValues ? NullValueHandling.Include : NullValueHandling.Ignore,
-					MissingMemberHandling = inputSettings.IgnoresExtraProperties ? MissingMemberHandling.Ignore : MissingMemberHandling.Error
+					MissingMemberHandling = inputSettings.IgnoresExtraProperties ? MissingMemberHandling.Ignore : MissingMemberHandling.Error,
+					MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
 				};
 
 			if (inputSettings.Converters != null)
