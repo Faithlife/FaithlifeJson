@@ -450,6 +450,7 @@ namespace Faithlife.Json
 					NullValueHandling = inputSettings.IncludesNullValues ? NullValueHandling.Include : NullValueHandling.Ignore,
 					MissingMemberHandling = inputSettings.IgnoresExtraProperties ? MissingMemberHandling.Ignore : MissingMemberHandling.Error,
 					MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+					CheckAdditionalContent = true,
 				};
 
 			if (inputSettings.Converters != null)
@@ -467,8 +468,6 @@ namespace Faithlife.Json
 		{
 			JsonSerializer serializer = JsonSerializer.Create(CreateDefaultJsonSerializerSettings(settings));
 			object value = serializer.Deserialize(reader, type);
-			if (reader.Read() && reader.TokenType != JsonToken.Comment)
-				throw new JsonSerializationException("Additional text found in JSON after deserializing.");
 			if (value == null && type == typeof(JToken))
 				value = new JValue((object) null);
 			return value;

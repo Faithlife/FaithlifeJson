@@ -86,6 +86,13 @@ namespace Faithlife.Json.Tests
 			Assert.AreEqual(value.Ref, "whatever");
 		}
 
+		[Test]
+		public void ExtraJsonAtEnd()
+		{
+			const string jsonWithExtraJson = @"{""title"":""whatever""}{}";
+			Assert.Throws<JsonReaderException>(() => JsonUtility.FromJson<Widget>(jsonWithExtraJson));
+		}
+
 		[TestCase(@"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12T13:14:15Z""},""title"":""whatever""}", JTokenType.Object)]
 		[TestCase(@"{}", JTokenType.Object)]
 		[TestCase(@"[3,1,4,1,5,9]", JTokenType.Array)]
