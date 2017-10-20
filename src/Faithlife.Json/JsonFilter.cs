@@ -132,7 +132,7 @@ namespace Faithlife.Json
 		/// appropriate, and then converts the filtered JSON back into an object.</remarks>
 		public T FilterObject<T>(T value)
 		{
-			return FilterObject(value, null, null);
+			return FilterObject(value, null);
 		}
 
 		/// <summary>
@@ -140,19 +140,18 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <typeparam name="T">The type of the object.</typeparam>
 		/// <param name="value">The object instance.</param>
-		/// <param name="outputSettings">The settings used when converting the object to JSON.</param>
-		/// <param name="inputSettings">The settings used when converting the filtered JSON back to an object.</param>
+		/// <param name="settings">The settings used when reading/writing JSON.</param>
 		/// <returns>A new object with the specified data filtered.</returns>
 		/// <remarks>This method converts the object to JSON, filtering out data as
 		/// appropriate, and then converts the filtered JSON back into an object.</remarks>
-		public T FilterObject<T>(T value, JsonOutputSettings outputSettings, JsonInputSettings inputSettings)
+		public T FilterObject<T>(T value, JsonSettings settings)
 		{
 			if (value == null)
 				return default(T);
 
 			var tokenWriter = new JTokenWriter();
-			JsonUtility.ToJsonWriter(value, outputSettings, CreateFilteredJsonWriter(tokenWriter));
-			return JsonUtility.FromJToken<T>(tokenWriter.Token, inputSettings);
+			JsonUtility.ToJsonWriter(value, settings, CreateFilteredJsonWriter(tokenWriter));
+			return JsonUtility.FromJToken<T>(tokenWriter.Token, settings);
 		}
 
 		/// <summary>
