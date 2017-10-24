@@ -7,14 +7,16 @@ is updated in preparation for publishing an updated NuGet package.
 
 Prefix the description of the change with `[major]`, `[minor]` or `[patch]` in accordance with [SemVer](http://semver.org).
 
-* Change .NET Framework minimum version to 4.6.1.
-* [major] Remove `DefaultValueDefaultAttribute`.
-* [major] Remove `JsonPointer` and `JsonPatch`.
-* [major] Simplify `JsonInputSettings` and `JsonOutputSettings`.
-* [major] Rename `JsonFilter.AlternatePathSepartor` to `AlternatePathSeparator`.
-* [major] Move JToken-specific members from `JsonUtility` to `JTokenUtility`.
-
 ## Released
+
+### 0.2.0
+
+* **Breaking:** Change .NET Framework minimum version to 4.6.1.
+* **Breaking:** Remove `DefaultValueDefaultAttribute`.
+* **Breaking:** Remove `JsonPointer` and `JsonPatch`.
+* **Breaking:** Simplify `JsonInputSettings` and `JsonOutputSettings`.
+* **Breaking:** Rename `JsonFilter.AlternatePathSepartor` to `AlternatePathSeparator`.
+* **Breaking:** Move JToken-specific members from `JsonUtility` to `JTokenUtility`.
 
 ### 0.1.1
 
