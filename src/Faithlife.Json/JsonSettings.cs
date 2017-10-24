@@ -16,19 +16,19 @@ namespace Faithlife.Json
 		/// <summary>
 		/// True if JSON properties without corresponding object properties should throw an exception when reading JSON.
 		/// </summary>
-		/// <remarks>The default is `false`, which ignores any extra JSON properties.</remarks>
+		/// <remarks>The default is <c>false</c>, which ignores any extra JSON properties.</remarks>
 		public bool RejectsExtraProperties { get; set; }
 
 		/// <summary>
-		/// True if `null` JSON properties should be read and/or written.
+		/// True if <c>null</c> JSON properties should be read and/or written.
 		/// </summary>
-		/// <remarks>The default is `false`, which neither reads nor writes `null` JSON properties.</remarks>
+		/// <remarks>The default is <c>false</c>, which neither reads nor writes <c>null</c> JSON properties.</remarks>
 		public bool IncludesNullValues { get; set; }
 
 		/// <summary>
 		/// True if JSON output should be indented.
 		/// </summary>
-		/// <remarks>The default is `false`, which generates minimal, compact JSON.</remarks>
+		/// <remarks>The default is <c>false</c>, which generates minimal, compact JSON.</remarks>
 		public bool IsIndented { get; set; }
 	}
 }
