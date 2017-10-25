@@ -48,12 +48,14 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void OverrideConverter()
 		{
+			var settings = new JsonSettings { Converters = new[] { new IsoDateOnlyJsonConverter() } };
+
 			Widget widget = new Widget { Title = "title", Kind = new WidgetKind { WeightInGrams = 1.2, ReleaseDate = new DateTime(2010, 9, 8, 7, 6, 5, DateTimeKind.Utc) } };
-			Assert.AreEqual(JsonUtility.ToJson(widget, new JsonOutputSettings { Converters = new[] { new IsoDateOnlyJsonConverter() } }),
+			Assert.AreEqual(JsonUtility.ToJson(widget, settings),
 				@"{""title"":""title"",""kind"":{""weightInGrams"":1.2,""releaseDate"":""2010-09-08""}}");
 
 			widget = JsonUtility.FromJson<Widget>(
-				@"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12""},""title"":""whatever""}", new JsonInputSettings { Converters = new[] { new IsoDateOnlyJsonConverter() } });
+				@"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12""},""title"":""whatever""}", settings);
 			Assert.AreEqual(widget.Title, "whatever");
 			Assert.AreEqual(widget.Kind.ReleaseDate.Day, 12);
 		}
@@ -71,12 +73,26 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void ExtraProperty()
 		{
-			Widget widget = null;
 			const string jsonWithExtraProperty = @"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12T13:14:15Z""},""title"":""whatever"",""version"":2}";
-			Assert.Throws<JsonSerializationException>(() => widget = JsonUtility.FromJson<Widget>(jsonWithExtraProperty));
-			widget = JsonUtility.FromJson<Widget>(jsonWithExtraProperty, new JsonInputSettings { IgnoresExtraProperties = true });
+			Assert.Throws<JsonSerializationException>(() => JsonUtility.FromJson<Widget>(jsonWithExtraProperty, new JsonSettings { RejectsExtraProperties = true }));
+			Widget widget = JsonUtility.FromJson<Widget>(jsonWithExtraProperty);
 			Assert.AreEqual(widget.Title, "whatever");
 			Assert.AreEqual(widget.Kind.ReleaseDate.Second, 15);
+		}
+
+		[Test]
+		public void IgnoreRefProperty()
+		{
+			const string jsonWithRefProperty = @"{""$ref"":""whatever""}";
+			var value = JsonUtility.FromJson<HasRefProperty>(jsonWithRefProperty);
+			Assert.AreEqual(value.Ref, "whatever");
+		}
+
+		[Test]
+		public void ExtraJsonAtEnd()
+		{
+			const string jsonWithExtraJson = @"{""title"":""whatever""}{}";
+			Assert.Throws<JsonReaderException>(() => JsonUtility.FromJson<Widget>(jsonWithExtraJson));
 		}
 
 		[TestCase(@"{""kind"":{""weightInGrams"":2.4,""releaseDate"":""2010-11-12T13:14:15Z""},""title"":""whatever""}", JTokenType.Object)]
@@ -99,14 +115,8 @@ namespace Faithlife.Json.Tests
 			Assert.AreEqual(JsonUtility.ToJson(jToken), jsonFrom);
 		}
 
-		private static void TestToAndFromJson<T>(T value, string json)
-		{
-			Assert.AreEqual(JsonUtility.ToJson(value), json);
-			Assert.AreEqual(JsonUtility.FromJson<T>(json), value);
-		}
-
 		[Test]
-		public void JsonNet40r7Bug()
+		public void JsonNet40R7Bug()
 		{
 			HasNullableValue hasNullableValue = new HasNullableValue { Value = new SomeValue { Text = "hi" } };
 			Assert.AreEqual(JsonUtility.ToJson(hasNullableValue), @"{""value"":""hi""}");
@@ -135,6 +145,12 @@ namespace Faithlife.Json.Tests
 		public struct SomeValue
 		{
 			public string Text { get; set; }
+		}
+
+		public class HasRefProperty
+		{
+			[JsonProperty("$ref")]
+			public string Ref { get; set; }
 		}
 
 		public class SomeValueJsonConverter : JsonConverter
