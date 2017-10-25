@@ -420,7 +420,14 @@ namespace Faithlife.Json
 			JsonSerializerSettings serializerSettings =
 				new JsonSerializerSettings
 				{
-					ContractResolver = new CamelCasePropertyNamesContractResolver(),
+					ContractResolver = new DefaultContractResolver
+					{
+						NamingStrategy = new CamelCaseNamingStrategy
+						{
+							OverrideSpecifiedNames = false,
+							ProcessDictionaryKeys = false
+						}
+					},
 					DateParseHandling = DateParseHandling.None,
 					NullValueHandling = settings.IncludesNullValues ? NullValueHandling.Include : NullValueHandling.Ignore,
 					MissingMemberHandling = settings.RejectsExtraProperties ? MissingMemberHandling.Error : MissingMemberHandling.Ignore,
@@ -461,7 +468,6 @@ namespace Faithlife.Json
 				new CamelCaseEnumJsonConverter(),
 				new IsoDateTimeUtcJsonConverter(),
 				new IsoDateTimeOffsetJsonConverter(),
-				new DictionaryKeysAreNotPropertyNamesJsonConverter(), // NOTE: must be after any other dictionary converters
 			};
 	}
 }
