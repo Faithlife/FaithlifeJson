@@ -468,6 +468,7 @@ namespace Faithlife.Json
 				new CamelCaseEnumJsonConverter(),
 				new IsoDateTimeUtcJsonConverter(),
 				new IsoDateTimeOffsetJsonConverter(),
+				new OptionalJsonConverter(),
 			};
 	}
 }
