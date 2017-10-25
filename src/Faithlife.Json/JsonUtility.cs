@@ -431,9 +431,6 @@ namespace Faithlife.Json
 			if (settings.Converters != null)
 				serializerSettings.Converters.AddRange(settings.Converters);
 
-			if (settings.Converters != null)
-				serializerSettings.Converters.AddRange(settings.Converters);
-
 			serializerSettings.Converters.AddRange(s_defaultConverters);
 
 			return serializerSettings;
