@@ -36,6 +36,12 @@ namespace Faithlife.Json.Tests
 			dates.End.ShouldBe(twelves);
 		}
 
+		[Test]
+		public void SecondsRequired()
+		{
+			Assert.Throws<JsonSerializationException>(() => JsonUtility.FromJson<DateTimeOffset>(@"""2011-11-11T11:11Z"""));
+		}
+
 		public class DateTimes
 		{
 			public DateTime Start { get; set; }
