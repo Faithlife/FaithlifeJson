@@ -12,13 +12,6 @@ namespace Faithlife.Json.Converters
 	public class IsoDateTimeOffsetJsonConverter : JsonConverterBase<DateTimeOffset>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="IsoDateTimeOffsetJsonConverter"/> class.
-		/// </summary>
-		public IsoDateTimeOffsetJsonConverter()
-		{
-		}
-
-		/// <summary>
 		/// Overrides WriteCore.
 		/// </summary>
 		protected override void WriteCore(JsonWriter writer, DateTimeOffset value, JsonSerializer serializer)
