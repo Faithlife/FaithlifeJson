@@ -24,19 +24,13 @@ namespace Faithlife.Json
 		/// <param name="left">The left JToken.</param>
 		/// <param name="right">The right JToken.</param>
 		/// <returns>True if the two JTokens are equal.</returns>
-		public static bool AreEqual(JToken left, JToken right)
-		{
-			return EqualityComparer.Equals(left, right);
-		}
+		public static bool AreEqual(JToken left, JToken right) => EqualityComparer.Equals(left, right);
 
 		/// <summary>
 		/// Returns a Boolean corresponding to the JToken if possible.
 		/// </summary>
 		/// <returns>This method returns null if the JToken is null or if it doesn't contain a Boolean.</returns>
-		public static bool? AsBoolean(this JToken jToken)
-		{
-			return jToken != null && jToken.Type == JTokenType.Boolean ? (bool) jToken : default(bool?);
-		}
+		public static bool? AsBoolean(this JToken jToken) => jToken != null && jToken.Type == JTokenType.Boolean ? (bool) jToken : default(bool?);
 
 		/// <summary>
 		/// Returns a Decimal corresponding to the JToken if possible.
@@ -116,8 +110,7 @@ namespace Faithlife.Json
 		/// on the number itself (since numeric representations of the number could lose precision).</remarks>
 		public static JValue AsNumber(this JToken jToken)
 		{
-			JValue jValue = jToken as JValue;
-			if (jValue == null)
+			if (!(jToken is JValue jValue))
 				return null;
 			JTokenType jTokenType = jValue.Type;
 			return jTokenType == JTokenType.Integer || jTokenType == JTokenType.Float ? jValue : null;
@@ -127,10 +120,7 @@ namespace Faithlife.Json
 		/// Returns a string corresponding to the JToken if possible.
 		/// </summary>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain a string.</returns>
-		public static string AsString(this JToken jToken)
-		{
-			return jToken != null && jToken.Type == JTokenType.String ? (string) jToken : null;
-		}
+		public static string AsString(this JToken jToken) => jToken != null && jToken.Type == JTokenType.String ? (string) jToken : null;
 
 		/// <summary>
 		/// Returns true if the JToken is null or represents null.
@@ -140,8 +130,7 @@ namespace Faithlife.Json
 			if (jToken == null)
 				return true;
 
-			JValue jValue = jToken as JValue;
-			return jValue != null && jValue.Value == null;
+			return jToken is JValue jValue && jValue.Value == null;
 		}
 
 		/// <summary>
@@ -151,11 +140,7 @@ namespace Faithlife.Json
 		/// <param name="itemIndex">The index of the array item.</param>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain an array,
 		/// or if the index is out of bounds.</returns>
-		public static JToken TryGetValue(this JToken jToken, int itemIndex)
-		{
-			JArray jArray = jToken as JArray;
-			return jArray != null && itemIndex >= 0 && itemIndex < jArray.Count ? jArray[itemIndex] : null;
-		}
+		public static JToken TryGetValue(this JToken jToken, int itemIndex) => jToken is JArray jArray && itemIndex >= 0 && itemIndex < jArray.Count ? jArray[itemIndex] : null;
 
 		/// <summary>
 		/// Returns the specified property value if possible.
@@ -164,11 +149,7 @@ namespace Faithlife.Json
 		/// <param name="propertyName">The name of the property.</param>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain an object,
 		/// or if the property name is null, or if the property doesn't exist.</returns>
-		public static JToken TryGetValue(this JToken jToken, string propertyName)
-		{
-			JObject jObject = jToken as JObject;
-			return jObject != null && propertyName != null ? jObject[propertyName] : null;
-		}
+		public static JToken TryGetValue(this JToken jToken, string propertyName) => jToken is JObject jObject && propertyName != null ? jObject[propertyName] : null;
 
 		/// <summary>
 		/// Gets a persistent hash code for the token.
@@ -273,8 +254,7 @@ namespace Faithlife.Json
 					// allow properties to be in any order, but make sure they have the same names and values
 					foreach (KeyValuePair<string, JToken> leftProperty in leftProperties)
 					{
-						JToken rightValue;
-						if (!rightProperties.TryGetValue(leftProperty.Key, out rightValue))
+						if (!rightProperties.TryGetValue(leftProperty.Key, out var rightValue))
 							return false;
 						if (!Equals(leftProperty.Value, rightValue))
 							return false;
