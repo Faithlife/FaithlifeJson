@@ -21,10 +21,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The JSON.</returns>
-		public static string ToJson(object value)
-		{
-			return ToJson(value, null);
-		}
+		public static string ToJson(object value) => ToJson(value, null);
 
 		/// <summary>
 		/// Converts the object to JSON.
@@ -46,10 +43,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <param name="jsonWriter">The JSON writer to write JSON to.</param>
-		public static void ToJsonWriter(object value, JsonWriter jsonWriter)
-		{
-			ToJsonWriter(value, null, jsonWriter);
-		}
+		public static void ToJsonWriter(object value, JsonWriter jsonWriter) => ToJsonWriter(value, null, jsonWriter);
 
 		/// <summary>
 		/// Converts the object to a JSON writer.
@@ -68,10 +62,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <param name="textWriter">The text writer to write JSON to.</param>
-		public static void ToJsonTextWriter(object value, TextWriter textWriter)
-		{
-			ToJsonTextWriter(value, null, textWriter);
-		}
+		public static void ToJsonTextWriter(object value, TextWriter textWriter) => ToJsonTextWriter(value, null, textWriter);
 
 		/// <summary>
 		/// Converts the object to a JSON text writer.
@@ -91,10 +82,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <param name="outputStream">The stream to write JSON to, using UTF-8 encoding.</param>
-		public static void ToJsonStream(object value, Stream outputStream)
-		{
-			ToJsonStream(value, null, outputStream);
-		}
+		public static void ToJsonStream(object value, Stream outputStream) => ToJsonStream(value, null, outputStream);
 
 		/// <summary>
 		/// Converts the object to a JSON stream.
@@ -115,10 +103,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The compressed JSON (as compressed by StringUtility).</returns>
-		public static byte[] ToCompressedJson(object value)
-		{
-			return ToCompressedJson(value, null);
-		}
+		public static byte[] ToCompressedJson(object value) => ToCompressedJson(value, null);
 
 		/// <summary>
 		/// Converts the object to JSON.
@@ -141,10 +126,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The number of bytes used by the JSON of an object.</returns>
-		public static int ToJsonByteCount(object value)
-		{
-			return ToJsonByteCount(value, null);
-		}
+		public static int ToJsonByteCount(object value) => ToJsonByteCount(value, null);
 
 		/// <summary>
 		/// Returns the number of bytes used by the JSON of an object.
@@ -166,10 +148,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The JToken.</returns>
-		public static JToken ToJToken(object value)
-		{
-			return ToJToken(value, null);
-		}
+		public static JToken ToJToken(object value) => ToJToken(value, null);
 
 		/// <summary>
 		/// Converts the object to a JToken.
@@ -194,10 +173,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static T FromJson<T>(string json)
-		{
-			return FromJson<T>(json, null);
-		}
+		public static T FromJson<T>(string json) => FromJson<T>(json, null);
 
 		/// <summary>
 		/// Creates an object from JSON.
@@ -207,10 +183,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static object FromJson(string json, Type type)
-		{
-			return FromJson(json, type, null);
-		}
+		public static object FromJson(string json, Type type) => FromJson(json, type, null);
 
 		/// <summary>
 		/// Creates an object from JSON.
@@ -221,10 +194,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static T FromJson<T>(string json, JsonSettings settings)
-		{
-			return (T) FromJson(json, typeof(T), settings);
-		}
+		public static T FromJson<T>(string json, JsonSettings settings) => (T) FromJson(json, typeof(T), settings);
 
 		/// <summary>
 		/// Creates an object from JSON.
@@ -248,10 +218,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static T FromJsonTextReader<T>(TextReader textReader)
-		{
-			return FromJsonTextReader<T>(textReader, null);
-		}
+		public static T FromJsonTextReader<T>(TextReader textReader) => FromJsonTextReader<T>(textReader, null);
 
 		/// <summary>
 		/// Creates an object from JSON.
@@ -261,10 +228,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static object FromJsonTextReader(TextReader textReader, Type type)
-		{
-			return FromJsonTextReader(textReader, type, null);
-		}
+		public static object FromJsonTextReader(TextReader textReader, Type type) => FromJsonTextReader(textReader, type, null);
 
 		/// <summary>
 		/// Creates an object from JSON.
@@ -274,10 +238,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static T FromJsonTextReader<T>(TextReader textReader, JsonSettings settings)
-		{
-			return (T) FromJsonTextReader(textReader, typeof(T), settings);
-		}
+		public static T FromJsonTextReader<T>(TextReader textReader, JsonSettings settings) => (T) FromJsonTextReader(textReader, typeof(T), settings);
 
 		/// <summary>
 		/// Creates an object from JSON.
@@ -302,10 +263,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static T FromCompressedJson<T>(byte[] json)
-		{
-			return FromCompressedJson<T>(json, null);
-		}
+		public static T FromCompressedJson<T>(byte[] json) => FromCompressedJson<T>(json, null);
 
 		/// <summary>
 		/// Creates an object from compressed JSON.
@@ -315,10 +273,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static object FromCompressedJson(byte[] json, Type type)
-		{
-			return FromCompressedJson(json, type, null);
-		}
+		public static object FromCompressedJson(byte[] json, Type type) => FromCompressedJson(json, type, null);
 
 		/// <summary>
 		/// Creates an object from compressed JSON.
@@ -329,10 +284,7 @@ namespace Faithlife.Json
 		/// <returns>The object.</returns>
 		/// <exception cref="JsonReaderException">The text is not valid JSON.</exception>
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
-		public static T FromCompressedJson<T>(byte[] json, JsonSettings settings)
-		{
-			return (T) FromCompressedJson(json, typeof(T), settings);
-		}
+		public static T FromCompressedJson<T>(byte[] json, JsonSettings settings) => (T) FromCompressedJson(json, typeof(T), settings);
 
 		/// <summary>
 		/// Creates an object from compressed JSON.
@@ -356,10 +308,7 @@ namespace Faithlife.Json
 		/// <typeparam name="T">The type of object to create.</typeparam>
 		/// <param name="json">The JToken.</param>
 		/// <returns>The object.</returns>
-		public static T FromJToken<T>(JToken json)
-		{
-			return FromJToken<T>(json, null);
-		}
+		public static T FromJToken<T>(JToken json) => FromJToken<T>(json, null);
 
 		/// <summary>
 		/// Creates an object from a JToken.
@@ -367,10 +316,7 @@ namespace Faithlife.Json
 		/// <param name="json">The JToken.</param>
 		/// <param name="type">The type.</param>
 		/// <returns>The object.</returns>
-		public static object FromJToken(JToken json, Type type)
-		{
-			return FromJToken(json, type, null);
-		}
+		public static object FromJToken(JToken json, Type type) => FromJToken(json, type, null);
 
 		/// <summary>
 		/// Creates an object from a JToken.
@@ -379,10 +325,7 @@ namespace Faithlife.Json
 		/// <param name="json">The JToken.</param>
 		/// <param name="settings">The settings.</param>
 		/// <returns>The object.</returns>
-		public static T FromJToken<T>(JToken json, JsonSettings settings)
-		{
-			return (T) FromJToken(json, typeof(T), settings);
-		}
+		public static T FromJToken<T>(JToken json, JsonSettings settings) => (T) FromJToken(json, typeof(T), settings);
 
 		/// <summary>
 		/// Creates an object from a JToken.
@@ -404,10 +347,7 @@ namespace Faithlife.Json
 		/// Creates default serialization settings.
 		/// </summary>
 		/// <returns>The serialization settings used by ToJson and FromJson.</returns>
-		public static JsonSerializerSettings CreateDefaultJsonSerializerSettings()
-		{
-			return CreateDefaultJsonSerializerSettings(null);
-		}
+		public static JsonSerializerSettings CreateDefaultJsonSerializerSettings() => CreateDefaultJsonSerializerSettings(null);
 
 		/// <summary>
 		/// Creates default serialization settings.
@@ -415,8 +355,6 @@ namespace Faithlife.Json
 		/// <returns>The serialization settings used by ToJson.</returns>
 		public static JsonSerializerSettings CreateDefaultJsonSerializerSettings(JsonSettings settings)
 		{
-			settings = settings ?? new JsonSettings();
-
 			JsonSerializerSettings serializerSettings =
 				new JsonSerializerSettings
 				{
@@ -429,13 +367,13 @@ namespace Faithlife.Json
 						}
 					},
 					DateParseHandling = DateParseHandling.None,
-					NullValueHandling = settings.IncludesNullValues ? NullValueHandling.Include : NullValueHandling.Ignore,
-					MissingMemberHandling = settings.RejectsExtraProperties ? MissingMemberHandling.Error : MissingMemberHandling.Ignore,
+					NullValueHandling = settings?.IncludesNullValues ?? false ? NullValueHandling.Include : NullValueHandling.Ignore,
+					MissingMemberHandling = settings?.RejectsExtraProperties ?? false ? MissingMemberHandling.Error : MissingMemberHandling.Ignore,
 					MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
 					CheckAdditionalContent = true,
 				};
 
-			if (settings.Converters != null)
+			if (settings?.Converters != null)
 				serializerSettings.Converters.AddRange(settings.Converters);
 
 			serializerSettings.Converters.AddRange(s_defaultConverters);
@@ -448,10 +386,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="settings">The settings.</param>
 		/// <returns>The JSON formatting.</returns>
-		public static Formatting GetJsonFormatting(JsonSettings settings)
-		{
-			return settings != null && settings.IsIndented ? Formatting.Indented : Formatting.None;
-		}
+		public static Formatting GetJsonFormatting(JsonSettings settings) => settings != null && settings.IsIndented ? Formatting.Indented : Formatting.None;
 
 		private static object Deserialize(JsonSettings settings, JsonReader reader, Type type)
 		{
