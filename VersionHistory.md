@@ -9,14 +9,21 @@ Prefix the description of the change with `[major]`, `[minor]` or `[patch]` in a
 
 ## Released
 
+### 0.3.0
+
+* [major] Remove `ReadOnlyDictionaryJsonConverter`  and `DictionaryKeysAreNotPropertyNamesJsonConverter`. (Json.NET 9+ doesn't need them.)
+* [minor] Add `OptionalJsonConverter` and use by default with `JsonUtility`.
+* [minor] Add `DefaultValueDefaultAttribute` (used on `Optional<T>` properties to distinguish null from missing).
+* [major] Remove empty `IsoDateTimeOffsetJsonConverter` constructor.
+
 ### 0.2.0
 
-* **Breaking:** Change .NET Framework minimum version to 4.6.1.
-* **Breaking:** Remove `DefaultValueDefaultAttribute`.
-* **Breaking:** Remove `JsonPointer` and `JsonPatch`.
-* **Breaking:** Simplify `JsonInputSettings` and `JsonOutputSettings`.
-* **Breaking:** Rename `JsonFilter.AlternatePathSepartor` to `AlternatePathSeparator`.
-* **Breaking:** Move JToken-specific members from `JsonUtility` to `JTokenUtility`.
+* [major] Change .NET Framework minimum version to 4.6.1.
+* [major] Remove `DefaultValueDefaultAttribute`.
+* [major] Remove `JsonPointer` and `JsonPatch`.
+* [major] Simplify `JsonInputSettings` and `JsonOutputSettings`.
+* [major] Rename `JsonFilter.AlternatePathSepartor` to `AlternatePathSeparator`.
+* [major] Move JToken-specific members from `JsonUtility` to `JTokenUtility`.
 
 ### 0.1.1
 

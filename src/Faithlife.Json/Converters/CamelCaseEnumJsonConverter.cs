@@ -1,5 +1,3 @@
-#pragma warning disable 1591
-
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;

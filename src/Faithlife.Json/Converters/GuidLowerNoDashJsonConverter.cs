@@ -1,5 +1,3 @@
-#pragma warning disable 1591
-
 using System;
 using Faithlife.Utility;
 using Newtonsoft.Json;
