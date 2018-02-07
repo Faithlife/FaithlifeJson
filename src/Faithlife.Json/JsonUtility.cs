@@ -358,14 +358,7 @@ namespace Faithlife.Json
 			JsonSerializerSettings serializerSettings =
 				new JsonSerializerSettings
 				{
-					ContractResolver = new DefaultContractResolver
-					{
-						NamingStrategy = new CamelCaseNamingStrategy
-						{
-							OverrideSpecifiedNames = false,
-							ProcessDictionaryKeys = false
-						}
-					},
+					ContractResolver = s_defaultContractResolver,
 					DateParseHandling = DateParseHandling.None,
 					NullValueHandling = settings?.IncludesNullValues ?? false ? NullValueHandling.Include : NullValueHandling.Ignore,
 					MissingMemberHandling = settings?.RejectsExtraProperties ?? false ? MissingMemberHandling.Error : MissingMemberHandling.Ignore,
@@ -396,6 +389,15 @@ namespace Faithlife.Json
 				value = new JValue((object) null);
 			return value;
 		}
+
+		private static readonly DefaultContractResolver s_defaultContractResolver = new DefaultContractResolver
+		{
+			NamingStrategy = new CamelCaseNamingStrategy
+			{
+				OverrideSpecifiedNames = false,
+				ProcessDictionaryKeys = false
+			}
+		};
 
 		private static readonly IReadOnlyList<JsonConverter> s_defaultConverters =
 			new JsonConverter[]
