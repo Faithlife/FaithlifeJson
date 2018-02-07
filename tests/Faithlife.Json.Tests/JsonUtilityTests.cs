@@ -122,6 +122,17 @@ namespace Faithlife.Json.Tests
 			Assert.AreEqual(JsonUtility.ToJson(hasNullableValue), @"{""value"":""hi""}");
 		}
 
+		[Test]
+		[MaxTime(1000)]
+		public void ToFromPerformance()
+		{
+			Widget widget = new Widget { Title = "title", Kind = new WidgetKind { WeightInGrams = 1.2, ReleaseDate = new DateTime(2010, 9, 8, 7, 6, 5, DateTimeKind.Utc) } };
+			for (int i = 0; i < 10000; i++)
+			{
+				JsonUtility.FromJson<Widget>(JsonUtility.ToJson(widget));
+			}
+		}
+
 		public class Widget
 		{
 			public string Title { get; set; }
