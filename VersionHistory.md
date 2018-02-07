@@ -11,7 +11,7 @@ Prefix the description of the change with `[major]`, `[minor]` or `[patch]` in a
 
 ### 0.3.1
 
-* [patch] Reuse `DefaultContractResolver` in by `JsonUtility` to benefit from its caching. Fixes performance regression in 0.3.0.
+* [patch] Reuse `DefaultContractResolver` in `JsonUtility` to benefit from its caching. Fixes performance regression in 0.3.0.
 
 ### 0.3.0
 
