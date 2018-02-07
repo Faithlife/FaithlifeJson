@@ -9,6 +9,10 @@ Prefix the description of the change with `[major]`, `[minor]` or `[patch]` in a
 
 ## Released
 
+### 0.3.1
+
+* [patch] Reuse `DefaultContractResolver` in by `JsonUtility` to benefit from its caching. Fixes performance regression in 0.3.0.
+
 ### 0.3.0
 
 * [major] Remove `ReadOnlyDictionaryJsonConverter`  and `DictionaryKeysAreNotPropertyNamesJsonConverter`. (Json.NET 9+ doesn't need them.)
