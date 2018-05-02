@@ -7,6 +7,10 @@ is updated in preparation for publishing an updated NuGet package.
 
 Prefix the description of the change with `[major]`, `[minor]` or `[patch]` in accordance with [SemVer](http://semver.org).
 
+### 0.4.0
+
+* [minor] Add `ValueTypeDto<T>` and `ValueTypeDtoJsonConverter` and use by default with `JsonUtility`.
+
 ## Released
 
 ### 0.3.1
