@@ -406,6 +406,7 @@ namespace Faithlife.Json
 				new IsoDateTimeUtcJsonConverter(),
 				new IsoDateTimeOffsetJsonConverter(),
 				new OptionalJsonConverter(),
+				new ValueTypeDtoJsonConverter(),
 			};
 	}
 }
