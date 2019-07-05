@@ -8,6 +8,14 @@ Prefix the description of the change with `[major]`, `[minor]` or `[patch]` in a
 
 ## Released
 
+### 0.5.0
+
+* Remove dependency on Faithlife.Analyzers.
+
+### 0.4.0
+
+* Update minimum target frameworks to .NET Standard 2.0, .NET 4.7.2.
+
 ### 0.3.1
 
 * [patch] Reuse `DefaultContractResolver` in `JsonUtility` to benefit from its caching. Fixes performance regression in 0.3.0.
