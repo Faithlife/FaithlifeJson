@@ -10,7 +10,7 @@ var trigger = Argument("trigger", "");
 var versionSuffix = Argument("versionSuffix", "");
 
 var solutionFileName = "Faithlife.Json.sln";
-var docsAssembly = File($"src/Faithlife.Json/bin/{configuration}/net461/Faithlife.Json.dll").ToString();
+var docsAssembly = File($"src/Faithlife.Json/bin/{configuration}/net472/Faithlife.Json.dll").ToString();
 var docsRepoUri = "https://github.com/Faithlife/FaithlifeJson.git";
 var docsSourceUri = "https://github.com/Faithlife/FaithlifeJson/tree/master/src/Faithlife.Json";
 
