@@ -113,7 +113,7 @@ namespace Faithlife.Json
 		{
 			using var stream = new MemoryStream();
 			using (var textWriter = StringUtility.CreateCompressingTextWriter(stream, Ownership.None))
-				ToJsonTextWriter(value, textWriter);
+				ToJsonTextWriter(value, settings, textWriter);
 			return stream.ToArray();
 		}
 
