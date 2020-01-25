@@ -32,11 +32,9 @@ namespace Faithlife.Json
 		/// <returns>The JSON.</returns>
 		public static string ToJson(object? value, JsonSettings? settings)
 		{
-			using (StringWriter stringWriter = new StringWriter(new StringBuilder(256), CultureInfo.InvariantCulture))
-			{
-				ToJsonTextWriter(value, settings, stringWriter);
-				return stringWriter.ToString();
-			}
+			using var stringWriter = new StringWriter(new StringBuilder(256), CultureInfo.InvariantCulture);
+			ToJsonTextWriter(value, settings, stringWriter);
+			return stringWriter.ToString();
 		}
 
 		/// <summary>
@@ -74,8 +72,8 @@ namespace Faithlife.Json
 		public static void ToJsonTextWriter(object? value, JsonSettings? settings, TextWriter textWriter)
 		{
 			Formatting formatting = GetJsonFormatting(settings);
-			using (JsonTextWriter jsonTextWriter = new JsonTextWriter(textWriter) { Formatting = formatting, CloseOutput = false })
-				ToJsonWriter(value, settings, jsonTextWriter);
+			using var jsonTextWriter = new JsonTextWriter(textWriter) { Formatting = formatting, CloseOutput = false };
+			ToJsonWriter(value, settings, jsonTextWriter);
 		}
 
 		/// <summary>
@@ -114,12 +112,10 @@ namespace Faithlife.Json
 		/// <returns>The JSON.</returns>
 		public static byte[] ToCompressedJson(object value, JsonSettings? settings)
 		{
-			using (MemoryStream stream = new MemoryStream())
-			{
-				using (TextWriter textWriter = StringUtility.CreateCompressingTextWriter(stream, Ownership.None))
-					ToJsonTextWriter(value, textWriter);
-				return stream.ToArray();
-			}
+			using var stream = new MemoryStream();
+			using (var textWriter = StringUtility.CreateCompressingTextWriter(stream, Ownership.None))
+				ToJsonTextWriter(value, textWriter);
+			return stream.ToArray();
 		}
 
 		/// <summary>
@@ -137,11 +133,9 @@ namespace Faithlife.Json
 		/// <returns>The number of bytes used by the JSON of an object.</returns>
 		public static int ToJsonByteCount(object value, JsonSettings? settings)
 		{
-			using (ZeroStream zeroStream = new ZeroStream())
-			{
-				ToJsonStream(value, settings, zeroStream);
-				return (int) zeroStream.Length;
-			}
+			using var zeroStream = new ZeroStream();
+			ToJsonStream(value, settings, zeroStream);
+			return (int) zeroStream.Length;
 		}
 
 		/// <summary>
@@ -159,11 +153,9 @@ namespace Faithlife.Json
 		/// <returns>The JToken.</returns>
 		public static JToken ToJToken(object value, JsonSettings? settings)
 		{
-			using (JTokenWriter jTokenWriter = new JTokenWriter())
-			{
-				ToJsonWriter(value, settings, jTokenWriter);
-				return jTokenWriter.Token;
-			}
+			using var jTokenWriter = new JTokenWriter();
+			ToJsonWriter(value, settings, jTokenWriter);
+			return jTokenWriter.Token;
 		}
 
 		/// <summary>
@@ -210,8 +202,8 @@ namespace Faithlife.Json
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
 		public static object? FromJson(string json, Type type, JsonSettings? settings)
 		{
-			using (StringReader stringReader = new StringReader(json))
-				return FromJsonTextReader(stringReader, type, settings);
+			using var stringReader = new StringReader(json);
+			return FromJsonTextReader(stringReader, type, settings);
 		}
 
 		/// <summary>
@@ -256,8 +248,8 @@ namespace Faithlife.Json
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
 		public static object? FromJsonTextReader(TextReader textReader, Type type, JsonSettings? settings)
 		{
-			using (JsonReader reader = new JsonTextReader(textReader))
-				return Deserialize(settings, reader, type);
+			using var reader = new JsonTextReader(textReader);
+			return Deserialize(settings, reader, type);
 		}
 
 		/// <summary>
@@ -304,9 +296,9 @@ namespace Faithlife.Json
 		/// <exception cref="JsonSerializationException">The JSON cannot be deserialized into the specified type.</exception>
 		public static object? FromCompressedJson(byte[] json, Type type, JsonSettings? settings)
 		{
-			using (MemoryStream stream = new MemoryStream(json, false))
-			using (TextReader textReader = StringUtility.CreateDecompressingTextReader(stream, Ownership.None))
-				return FromJsonTextReader(textReader, type, settings);
+			using var stream = new MemoryStream(json, false);
+			using var textReader = StringUtility.CreateDecompressingTextReader(stream, Ownership.None);
+			return FromJsonTextReader(textReader, type, settings);
 		}
 
 		/// <summary>
@@ -348,8 +340,8 @@ namespace Faithlife.Json
 			if (json.IsNull())
 				return json;
 
-			using (JsonReader reader = new JTokenReader(json))
-				return Deserialize(settings, reader, type);
+			using var reader = new JTokenReader(json);
+			return Deserialize(settings, reader, type);
 		}
 
 		/// <summary>
