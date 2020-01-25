@@ -26,7 +26,7 @@ namespace Faithlife.Json.Tests
 			dates = JsonConvert.DeserializeObject<DateTimes>(@"{""Start"":""2011-11-11"",""End"":""2012-12-12""}", new IsoDateOnlyJsonConverter());
 			dates.Start.ShouldBe(elevens);
 			dates.End.ShouldBe(twelves);
-			dates = JsonUtility.FromJson<DateTimes>(@"{""Start"":""2011-11-11"",""End"":""2012-12-12""}", new JsonSettings { Converters = new[] { new IsoDateOnlyJsonConverter() } });
+			dates = JsonUtility.FromJson<DateTimes>(@"{""Start"":""2011-11-11"",""End"":""2012-12-12""}", new JsonSettings { Converters = new[] { new IsoDateOnlyJsonConverter() } })!;
 			dates.Start.ShouldBe(elevens);
 			dates.End.ShouldBe(twelves);
 		}

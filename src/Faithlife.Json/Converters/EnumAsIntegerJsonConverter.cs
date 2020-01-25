@@ -14,13 +14,13 @@ namespace Faithlife.Json.Converters
 			return (Nullable.GetUnderlyingType(objectType) ?? objectType).IsEnum();
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			Type underlyingType = Nullable.GetUnderlyingType(objectType);
 
 			if (reader.TokenType == JsonToken.Null)
 			{
-				if (underlyingType == null)
+				if (underlyingType is null)
 					throw new JsonSerializationException("Cannot convert null value to non-nullable enum.");
 
 				return null;
@@ -44,9 +44,6 @@ namespace Faithlife.Json.Converters
 			}
 		}
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-		{
-			writer.WriteValue(Convert.ToInt64(value));
-		}
+		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => writer.WriteValue(Convert.ToInt64(value));
 	}
 }

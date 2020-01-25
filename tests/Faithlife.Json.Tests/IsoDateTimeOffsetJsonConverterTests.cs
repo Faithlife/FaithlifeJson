@@ -34,7 +34,7 @@ namespace Faithlife.Json.Tests
 			dates.Start.ShouldBe(elevens);
 			dates.End.ShouldBe(twelves);
 			dates = JsonUtility.FromJson<DateTimeOffsets>(
-				@"{""Start"":""2011-11-11T11:11:11+00:00"",""End"":""2012-12-12T12:12:12+00:00""}");
+				@"{""Start"":""2011-11-11T11:11:11+00:00"",""End"":""2012-12-12T12:12:12+00:00""}")!;
 			dates.Start.ShouldBe(elevens);
 			dates.End.ShouldBe(twelves);
 		}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Faithlife.Utility;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace Faithlife.Json
 		/// An equality comparer for JToken.
 		/// </summary>
 		/// <remarks>This comparer ignores the order of object properties.</remarks>
-		public static readonly IEqualityComparer<JToken> EqualityComparer = new OurJTokenEqualityComparer();
+		public static readonly IEqualityComparer<JToken?> EqualityComparer = new OurJTokenEqualityComparer();
 
 		/// <summary>
 		/// Check two JTokens for equality.
@@ -24,25 +25,25 @@ namespace Faithlife.Json
 		/// <param name="left">The left JToken.</param>
 		/// <param name="right">The right JToken.</param>
 		/// <returns>True if the two JTokens are equal.</returns>
-		public static bool AreEqual(JToken left, JToken right) => EqualityComparer.Equals(left, right);
+		public static bool AreEqual(JToken? left, JToken? right) => EqualityComparer.Equals(left, right);
 
 		/// <summary>
 		/// Returns a Boolean corresponding to the JToken if possible.
 		/// </summary>
 		/// <returns>This method returns null if the JToken is null or if it doesn't contain a Boolean.</returns>
-		public static bool? AsBoolean(this JToken jToken) => jToken != null && jToken.Type == JTokenType.Boolean ? (bool) jToken : default(bool?);
+		public static bool? AsBoolean(this JToken? jToken) => jToken is object && jToken.Type == JTokenType.Boolean ? (bool) jToken : default(bool?);
 
 		/// <summary>
 		/// Returns a Decimal corresponding to the JToken if possible.
 		/// </summary>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain a number,
 		/// or if that number overflows a Decimal.</returns>
-		public static decimal? AsDecimal(this JToken jToken)
+		public static decimal? AsDecimal(this JToken? jToken)
 		{
 			try
 			{
-				JValue jValue = jToken.AsNumber();
-				return jValue != null ? (decimal) jValue : default(decimal?);
+				var jValue = jToken.AsNumber();
+				return jValue is object ? (decimal) jValue : default(decimal?);
 			}
 			catch (OverflowException)
 			{
@@ -55,12 +56,12 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain a number,
 		/// or if that number overflows a Double.</returns>
-		public static double? AsDouble(this JToken jToken)
+		public static double? AsDouble(this JToken? jToken)
 		{
 			try
 			{
-				JValue jValue = jToken.AsNumber();
-				return jValue != null ? (double) jValue : default(double?);
+				var jValue = jToken.AsNumber();
+				return jValue is object ? (double) jValue : default(double?);
 			}
 			catch (OverflowException)
 			{
@@ -73,11 +74,11 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain a number,
 		/// or if that number overflows an Int32, or if that number was parsed as floating-point.</returns>
-		public static int? AsInt32(this JToken jToken)
+		public static int? AsInt32(this JToken? jToken)
 		{
 			try
 			{
-				return jToken != null && jToken.Type == JTokenType.Integer ? (int) jToken : default(int?);
+				return jToken is object && jToken.Type == JTokenType.Integer ? (int) jToken : default(int?);
 			}
 			catch (OverflowException)
 			{
@@ -90,11 +91,11 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain a number,
 		/// or if that number overflows an Int64, or if that number was parsed as floating-point.</returns>
-		public static long? AsInt64(this JToken jToken)
+		public static long? AsInt64(this JToken? jToken)
 		{
 			try
 			{
-				return jToken != null && jToken.Type == JTokenType.Integer ? (long) jToken : default(long?);
+				return jToken is object && jToken.Type == JTokenType.Integer ? (long) jToken : default(long?);
 			}
 			catch (OverflowException)
 			{
@@ -108,7 +109,7 @@ namespace Faithlife.Json
 		/// <returns>This method returns null if the JToken is null or if it doesn't contain a number.</returns>
 		/// <remarks>Use this method to "filter out" non-numeric tokens without losing any precision
 		/// on the number itself (since numeric representations of the number could lose precision).</remarks>
-		public static JValue AsNumber(this JToken jToken)
+		public static JValue? AsNumber(this JToken? jToken)
 		{
 			if (!(jToken is JValue jValue))
 				return null;
@@ -120,17 +121,17 @@ namespace Faithlife.Json
 		/// Returns a string corresponding to the JToken if possible.
 		/// </summary>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain a string.</returns>
-		public static string AsString(this JToken jToken) => jToken != null && jToken.Type == JTokenType.String ? (string) jToken : null;
+		public static string? AsString(this JToken? jToken) => jToken is object && jToken.Type == JTokenType.String ? (string) jToken : null;
 
 		/// <summary>
 		/// Returns true if the JToken is null or represents null.
 		/// </summary>
-		public static bool IsNull(this JToken jToken)
+		public static bool IsNull(this JToken? jToken)
 		{
-			if (jToken == null)
+			if (jToken is null)
 				return true;
 
-			return jToken is JValue jValue && jValue.Value == null;
+			return jToken is JValue jValue && jValue.Value is null;
 		}
 
 		/// <summary>
@@ -140,7 +141,7 @@ namespace Faithlife.Json
 		/// <param name="itemIndex">The index of the array item.</param>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain an array,
 		/// or if the index is out of bounds.</returns>
-		public static JToken TryGetValue(this JToken jToken, int itemIndex) => jToken is JArray jArray && itemIndex >= 0 && itemIndex < jArray.Count ? jArray[itemIndex] : null;
+		public static JToken? TryGetValue(this JToken? jToken, int itemIndex) => jToken is JArray jArray && itemIndex >= 0 && itemIndex < jArray.Count ? jArray[itemIndex] : null;
 
 		/// <summary>
 		/// Returns the specified property value if possible.
@@ -149,20 +150,20 @@ namespace Faithlife.Json
 		/// <param name="propertyName">The name of the property.</param>
 		/// <returns>This method returns null if the JToken is null, or if it doesn't contain an object,
 		/// or if the property name is null, or if the property doesn't exist.</returns>
-		public static JToken TryGetValue(this JToken jToken, string propertyName) => jToken is JObject jObject && propertyName != null ? jObject[propertyName] : null;
+		public static JToken? TryGetValue(this JToken? jToken, string? propertyName) => jToken is JObject jObject && propertyName is object ? jObject[propertyName] : null;
 
 		/// <summary>
 		/// Gets a persistent hash code for the token.
 		/// </summary>
 		/// <param name="token">The token, which must not be <c>null</c>.</param>
 		/// <returns>The persistent hash code.</returns>
-		public static int GetPersistentHashCode(JToken token)
+		public static int GetPersistentHashCode(JToken? token)
 		{
 			// return hard-coded hash code for null
 			if (token.IsNull())
 				return 10;
 
-			JTokenType tokenType = token.Type;
+			JTokenType tokenType = token!.Type;
 
 			// compare arrays
 			if (tokenType == JTokenType.Array)
@@ -208,11 +209,12 @@ namespace Faithlife.Json
 		/// <typeparam name="T">The type of token.</typeparam>
 		/// <param name="token">The token.</param>
 		/// <returns>The clone.</returns>
-		public static T Clone<T>(T token) where T : JToken => (T) token?.DeepClone();
+		[return: NotNullIfNotNull("token")]
+		public static T? Clone<T>(T? token) where T : JToken => (T?) token?.DeepClone();
 
-		private sealed class OurJTokenEqualityComparer : IEqualityComparer<JToken>
+		private sealed class OurJTokenEqualityComparer : IEqualityComparer<JToken?>
 		{
-			public bool Equals(JToken left, JToken right)
+			public bool Equals(JToken? left, JToken? right)
 			{
 				if (object.ReferenceEquals(left, right))
 					return true;
@@ -222,8 +224,8 @@ namespace Faithlife.Json
 				else if (right.IsNull())
 					return false;
 
-				JTokenType leftType = left.Type;
-				JTokenType rightType = right.Type;
+				JTokenType leftType = left!.Type;
+				JTokenType rightType = right!.Type;
 
 				// compare arrays
 				if (leftType == JTokenType.Array)
@@ -274,10 +276,7 @@ namespace Faithlife.Json
 				return left.ToString(Formatting.None) == right.ToString(Formatting.None);
 			}
 
-			public int GetHashCode(JToken token)
-			{
-				return token == null ? 0 : GetPersistentHashCode(token);
-			}
+			public int GetHashCode(JToken? token) => GetPersistentHashCode(token);
 		}
 	}
 }

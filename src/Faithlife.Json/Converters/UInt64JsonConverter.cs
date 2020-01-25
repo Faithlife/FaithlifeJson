@@ -14,11 +14,11 @@ namespace Faithlife.Json.Converters
 			return (Nullable.GetUnderlyingType(objectType) ?? objectType) == typeof(ulong);
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			if (reader.TokenType == JsonToken.Null)
 			{
-				if (Nullable.GetUnderlyingType(objectType) == null)
+				if (Nullable.GetUnderlyingType(objectType) is null)
 					throw new JsonSerializationException("Cannot convert null value to non-nullable ulong.");
 
 				return null;
@@ -42,9 +42,9 @@ namespace Faithlife.Json.Converters
 			}
 		}
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		{
-			if (value != null)
+			if (value is object)
 				writer.WriteValue(((ulong) value).ToString(CultureInfo.InvariantCulture));
 			else
 				writer.WriteValue(value);

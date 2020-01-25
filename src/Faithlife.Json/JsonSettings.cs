@@ -11,7 +11,7 @@ namespace Faithlife.Json
 		/// <summary>
 		/// Additional converters to use when reading/writing JSON.
 		/// </summary>
-		public IReadOnlyList<JsonConverter> Converters { get; set; }
+		public IReadOnlyList<JsonConverter>? Converters { get; set; }
 
 		/// <summary>
 		/// True if JSON properties without corresponding object properties should throw an exception when reading JSON.

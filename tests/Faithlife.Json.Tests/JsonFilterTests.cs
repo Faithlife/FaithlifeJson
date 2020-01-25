@@ -39,8 +39,8 @@ namespace Faithlife.Json.Tests
 		[TestCase("xyzzy,!xyzzy,xyzzy", "xyzzy")]
 		public void TryParseAndToString(string filterText, string roundTrip)
 		{
-			JsonFilter filter = JsonFilter.TryParse(filterText);
-			if (filter == null)
+			var filter = JsonFilter.TryParse(filterText);
+			if (filter is null)
 			{
 				Assert.IsNull(roundTrip);
 			}
@@ -48,14 +48,14 @@ namespace Faithlife.Json.Tests
 			{
 				Assert.AreEqual(roundTrip, JsonFilter.JoinPaths(filter.GetPropertyPaths()));
 				Assert.AreEqual(roundTrip, filter.ToString());
-				Assert.AreEqual(roundTrip, JsonFilter.TryParse(filter.ToString()).ToString());
+				Assert.AreEqual(roundTrip, JsonFilter.TryParse(filter.ToString())?.ToString());
 			}
 		}
 
 		[Test]
 		public void SupportSemicolons()
 		{
-			Assert.AreEqual(JsonFilter.TryParse("abc;!def,ghi;jkl").ToString(), "abc,!def,ghi,jkl");
+			Assert.AreEqual(JsonFilter.TryParse("abc;!def,ghi;jkl")?.ToString(), "abc,!def,ghi,jkl");
 		}
 
 		[TestCase("xyzzy", "root.path", "*,root.*,root.path.xyzzy")]
@@ -69,15 +69,15 @@ namespace Faithlife.Json.Tests
 		[TestCase(" xy . zzy ,! foo . bar , foo,!abcd,!efg.hij.lmn ", "root.path", "*,root.*,!root.path.abcd,!root.path.efg.hij.lmn,root.path.foo,!root.path.foo.bar,root.path.xy.zzy")]
 		public void TryParseWithRootPath(string filterText, string rootPath, string roundTrip)
 		{
-			JsonFilter filter = JsonFilter.TryParse(filterText, rootPath);
-			if (filter == null)
+			var filter = JsonFilter.TryParse(filterText, rootPath);
+			if (filter is null)
 			{
 				Assert.IsNull(roundTrip);
 			}
 			else
 			{
 				Assert.AreEqual(roundTrip, filter.ToString());
-				Assert.AreEqual(roundTrip, JsonFilter.TryParse(filter.ToString()).ToString());
+				Assert.AreEqual(roundTrip, JsonFilter.TryParse(filter.ToString())?.ToString());
 			}
 		}
 
@@ -97,13 +97,13 @@ namespace Faithlife.Json.Tests
 		public void BasicFilterTokenTest()
 		{
 			var personBefore = new PersonDto { Id = 123, Name = new NameDto { First = "Ed", Middle = 'J', Last = "Ball" } };
-			var personAfter = JsonFilter.Parse("name,!name.middle").FilterObject(personBefore);
+			var personAfter = JsonFilter.Parse("name,!name.middle").FilterObject(personBefore)!;
 
 			Assert.AreEqual(123, personBefore.Id);
 			Assert.AreEqual(null, personAfter.Id);
 
 			Assert.AreEqual("Ed", personBefore.Name.First);
-			Assert.AreEqual("Ed", personAfter.Name.First);
+			Assert.AreEqual("Ed", personAfter.Name!.First);
 
 			Assert.AreEqual('J', personBefore.Name.Middle);
 			Assert.AreEqual(null, personAfter.Name.Middle);
@@ -116,16 +116,16 @@ namespace Faithlife.Json.Tests
 		public void NullFilterTokenTest()
 		{
 			Assert.IsNull(JsonFilter.Parse("name,!name.middle").FilterToken(null));
-			Assert.IsNull(JsonFilter.Parse("name,!name.middle").FilterObject((PersonDto) null));
+			Assert.IsNull(JsonFilter.Parse("name,!name.middle").FilterObject((PersonDto?) null));
 		}
 
 		[Test, TestCaseSource(nameof(GetTestCases))]
 		public void FilterTests(string filterText, string rootPath, string before, string after)
 		{
-			JsonFilter filter = JsonFilter.TryParse(filterText, rootPath);
+			var filter = JsonFilter.TryParse(filterText, rootPath)!;
 			JToken beforeToken = JToken.Parse(before);
 			JToken afterToken = JToken.Parse(after);
-			JToken actualToken = filter.FilterToken(beforeToken);
+			JToken? actualToken = filter.FilterToken(beforeToken);
 			if (!JTokenUtility.AreEqual(actualToken, afterToken))
 				Assert.Fail("expected {0} actual {1}", afterToken, actualToken);
 
@@ -148,24 +148,24 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void ChildPropertyPath()
 		{
-			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Name.First), "name.first");
-			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Name.Middle), "name.middle");
-			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Name.Last), "name.last");
+			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Name!.First), "name.first");
+			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Name!.Middle), "name.middle");
+			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Name!.Last), "name.last");
 		}
 
 		[Test]
 		public void ArrayPropertyPath()
 		{
-			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Items[0].Id), "items.id");
-			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Items[0].IsDeleted), "items.del");
+			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Items![0].Id), "items.id");
+			Assert.AreEqual(JsonFilter.GetPropertyPath((InterestingDto dto) => dto.Items![0].IsDeleted), "items.del");
 		}
 
 		[Test]
 		public void JoinPropertyPaths()
 		{
 			JsonFilter.JoinPaths(
-				JsonFilter.JoinPropertyPaths<InterestingDto>(dto => dto.Name, dto => dto.Items[0].Id),
-				JsonFilter.JoinExcludedPropertyPaths<InterestingDto>(dto => dto.NextId, dto => dto.Items[0].IsDeleted), "name,items.id,!next,!items.del");
+				JsonFilter.JoinPropertyPaths<InterestingDto>(dto => dto.Name, dto => dto.Items![0].Id),
+				JsonFilter.JoinExcludedPropertyPaths<InterestingDto>(dto => dto.NextId, dto => dto.Items![0].IsDeleted), "name,items.id,!next,!items.del");
 		}
 
 		[Test]
@@ -175,15 +175,13 @@ namespace Faithlife.Json.Tests
 			Assert.IsTrue(JsonFilter.Parse("!id").IsPathIncluded("name.first"));
 		}
 
-		private void VerifyIsPathIncluded(JsonFilter filter, string path, JToken beforeToken, JToken afterToken)
+		private void VerifyIsPathIncluded(JsonFilter filter, string? path, JToken beforeToken, JToken afterToken)
 		{
-			JObject beforeObject = beforeToken as JObject;
-			JObject afterObject = afterToken as JObject;
-			if (beforeObject != null && afterObject != null)
+			if (beforeToken is JObject beforeObject && afterToken is JObject afterObject)
 			{
 				foreach (var property in beforeObject)
 				{
-					string childPath = (path == null ? "" : (path + ".")) + property.Key;
+					string childPath = (path is null ? "" : (path + ".")) + property.Key;
 					JToken afterChildToken;
 					bool isIncluded = afterObject.TryGetValue(property.Key, out afterChildToken);
 					Assert.AreEqual(filter.IsPathIncluded(childPath), isIncluded, "{0} was {1}", childPath, isIncluded ? "included" : "not included");
@@ -191,68 +189,63 @@ namespace Faithlife.Json.Tests
 					VerifyIsPathIncluded(filter, childPath, property.Value, afterChildToken);
 				}
 			}
-			else
+			else if (beforeToken is JArray beforeArray && afterToken is JArray afterArray && beforeArray.Count == afterArray.Count)
 			{
-				JArray beforeArray = beforeToken as JArray;
-				JArray afterArray = afterToken as JArray;
-				if (beforeArray != null && afterArray != null && beforeArray.Count == afterArray.Count)
-				{
-					for (int index = 0; index < beforeArray.Count; index++)
-						VerifyIsPathIncluded(filter, path, beforeArray[index], afterArray[index]);
-				}
+				for (int index = 0; index < beforeArray.Count; index++)
+					VerifyIsPathIncluded(filter, path, beforeArray[index], afterArray[index]);
 			}
 		}
 
 		private sealed class PersonDto
 		{
 			public int? Id { get; set; }
-			public NameDto Name { get; set; }
+			public NameDto? Name { get; set; }
 		}
 
 		private sealed class NameDto
 		{
-			public string First { get; set; }
+			public string? First { get; set; }
 			public char? Middle { get; set; }
-			public string Last { get; set; }
+			public string? Last { get; set; }
 		}
 
 		private sealed class InterestingDto
 		{
-			public ReadOnlyCollection<InterestingItemDto> Items { get; set; }
+			public ReadOnlyCollection<InterestingItemDto>? Items { get; set; }
 
 			[JsonProperty("next")]
-			public string NextId { get; set; }
+			public string? NextId { get; set; }
 
-			public NameDto Name { get; set; }
+			public NameDto? Name { get; set; }
 		}
 
 		public sealed class InterestingItemDto
 		{
-			public string Id { get; set; }
+			public string? Id { get; set; }
 
 			[JsonProperty("del")]
 			public bool IsDeleted { get; set; }
 		}
 
-		private static IEnumerable<string[]> GetTestCases()
+		private static IEnumerable<string?[]> GetTestCases()
 		{
-			Stream stream = typeof(JsonFilterTests).GetAssembly().GetManifestResourceStream("Faithlife.Json.Tests.JsonFilterTestCases.txt");
+			Stream stream = typeof(JsonFilterTests).GetAssembly().GetManifestResourceStream("Faithlife.Json.Tests.JsonFilterTestCases.txt")!;
 			Verify.IsNotNull(stream);
 			using (var reader = new StreamReader(stream))
 			{
 				while (true)
 				{
-					string filter;
+					string? filter;
 					while (true)
 					{
 						filter = reader.ReadLine();
-						if (filter == null)
+						if (filter is null)
 							break;
 						filter = filter.Trim();
 						if (filter.Length != 0)
 							break;
 					}
-					if (filter == null)
+					if (filter is null)
 						break;
 
 					string[] filterParts = filter.Split(new[] { '^' }, 2);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -24,7 +25,7 @@ namespace Faithlife.Json
 		/// Each JSON path is one or more property names separated by periods.
 		/// A JSON path prefixed with an exclamation point is excluded rather than included.
 		/// If no JSON paths are found, this method returns null.</remarks>
-		public static JsonFilter TryParse(string value)
+		public static JsonFilter? TryParse(string? value)
 		{
 			return TryParse(value, null);
 		}
@@ -37,20 +38,20 @@ namespace Faithlife.Json
 		/// <returns>The corresponding filter, or null.</returns>
 		/// <remarks>This overload automatically prefixes each JSON path
 		/// with the specified root path, if specified.</remarks>
-		public static JsonFilter TryParse(string value, string rootPath)
+		public static JsonFilter? TryParse(string? value, string? rootPath)
 		{
-			if (string.IsNullOrWhiteSpace(value))
+			if (value is null || string.IsNullOrWhiteSpace(value))
 				return Empty;
 
-			var paths = new List<PropertyPath>();
+			var paths = new List<PropertyPath?>();
 
-			if (!string.IsNullOrEmpty(rootPath))
+			if (rootPath is object && rootPath.Length != 0)
 			{
 				if (rootPath.IndexOfAny(s_pathSeparators) != -1)
 					return null;
 
-				PropertyPath parsedRootPath = PropertyPath.TryParse(rootPath, null);
-				if (parsedRootPath == null || parsedRootPath.IsExcluded)
+				var parsedRootPath = PropertyPath.TryParse(rootPath, null);
+				if (parsedRootPath is null || parsedRootPath.IsExcluded)
 					return null;
 
 				string nextPrefix = "";
@@ -64,12 +65,12 @@ namespace Faithlife.Json
 			paths.AddRange(SplitFullPaths(value)
 				.Select(x => PropertyPath.TryParse(x, rootPath)));
 
-			if (paths.Any(x => x == null))
+			if (paths.Any(x => x is null))
 				return null;
 
 			FilterNode rootNode = new FilterNode();
-			foreach (PropertyPath path in paths.WhereNotNull())
-				rootNode.AddPath(path);
+			foreach (PropertyPath? path in paths.WhereNotNull()) // TODO: Update Faithlife.Utility
+				rootNode.AddPath(path!);
 			return new JsonFilter(rootNode);
 		}
 
@@ -86,10 +87,10 @@ namespace Faithlife.Json
 		/// Creates a filter from a string.
 		/// </summary>
 		/// <remarks>Like TryParse, but throws FormatException on failure.</remarks>
-		public static JsonFilter Parse(string value, string rootPath)
+		public static JsonFilter Parse(string value, string? rootPath)
 		{
-			JsonFilter filter = TryParse(value, rootPath);
-			if (filter == null)
+			var filter = TryParse(value, rootPath);
+			if (filter is null)
 				throw new FormatException("Invalid filter syntax.");
 			return filter;
 		}
@@ -99,22 +100,17 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="writer">The wrapped JSON writer.</param>
 		/// <returns>The filtered JSON writer.</returns>
-		public JsonWriter CreateFilteredJsonWriter(JsonWriter writer)
-		{
-			if (writer == null)
-				throw new ArgumentNullException("writer");
-
-			return new FilteredJsonWriter(writer, m_rootNode);
-		}
+		public JsonWriter CreateFilteredJsonWriter(JsonWriter writer) =>
+			new FilteredJsonWriter(writer ?? throw new ArgumentNullException(nameof(writer)), m_rootNode);
 
 		/// <summary>
 		/// Filters data from the specified token.
 		/// </summary>
 		/// <param name="token">The input token.</param>
 		/// <returns>The output token.</returns>
-		public JToken FilterToken(JToken token)
+		public JToken? FilterToken(JToken? token)
 		{
-			if (token == null)
+			if (token is null)
 				return null;
 
 			var tokenWriter = new JTokenWriter();
@@ -130,10 +126,8 @@ namespace Faithlife.Json
 		/// <returns>A new object with the specified data filtered.</returns>
 		/// <remarks>This method converts the object to JSON, filtering out data as
 		/// appropriate, and then converts the filtered JSON back into an object.</remarks>
-		public T FilterObject<T>(T value)
-		{
-			return FilterObject(value, null);
-		}
+		[return: MaybeNull]
+		public T FilterObject<T>([AllowNull] T value) => FilterObject(value, null);
 
 		/// <summary>
 		/// Filters data from the specified object.
@@ -144,10 +138,11 @@ namespace Faithlife.Json
 		/// <returns>A new object with the specified data filtered.</returns>
 		/// <remarks>This method converts the object to JSON, filtering out data as
 		/// appropriate, and then converts the filtered JSON back into an object.</remarks>
-		public T FilterObject<T>(T value, JsonSettings settings)
+		[return: MaybeNull]
+		public T FilterObject<T>([AllowNull] T value, JsonSettings? settings)
 		{
-			if (value == null)
-				return default(T);
+			if (value is null)
+				return default!;
 
 			var tokenWriter = new JTokenWriter();
 			JsonUtility.ToJsonWriter(value, settings, CreateFilteredJsonWriter(tokenWriter));
@@ -161,8 +156,8 @@ namespace Faithlife.Json
 		/// <returns>True if the specified path is included by the filter.</returns>
 		public bool IsPathIncluded(string path)
 		{
-			PropertyPath propertyPath = PropertyPath.TryParse(path, null);
-			if (propertyPath == null || propertyPath.IsExcluded)
+			var propertyPath = PropertyPath.TryParse(path, null);
+			if (propertyPath is null || propertyPath.IsExcluded)
 				return false;
 
 			FilterNode node = m_rootNode;
@@ -171,7 +166,7 @@ namespace Faithlife.Json
 				FilterNode childNode = node.FindChild(part);
 				if (!ShouldIncludeProperty(node, childNode))
 					return false;
-				if (childNode == null)
+				if (childNode is null)
 					break;
 				node = childNode;
 			}
@@ -241,7 +236,7 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="expression">The property expression.</param>
 		/// <returns>True if the specified property is included by the filter.</returns>
-		public bool IsPropertyIncluded<TOwner>(Expression<Func<TOwner, object>> expression)
+		public bool IsPropertyIncluded<TOwner>(Expression<Func<TOwner, object?>> expression)
 		{
 			return IsPathIncluded(GetPropertyPath(expression));
 		}
@@ -251,36 +246,23 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="path">The path.</param>
 		/// <returns>The excluded path.</returns>
-		public static string ExcludePath(string path)
-		{
-			if (path == null)
-				throw new ArgumentNullException("path");
-
-			return ExcludePrefix + path;
-		}
+		public static string ExcludePath(string path) =>
+			ExcludePrefix + (path ?? throw new ArgumentNullException(nameof(path)));
 
 		/// <summary>
 		/// Joins the specified paths with the standard delimiter.
 		/// </summary>
 		/// <param name="paths">The paths.</param>
 		/// <returns>The joined paths.</returns>
-		public static string JoinPaths(IEnumerable<string> paths)
-		{
-			if (paths == null)
-				throw new ArgumentNullException("paths");
-
-			return paths.Join(PathSeparator.ToString());
-		}
+		public static string JoinPaths(IEnumerable<string> paths) =>
+			(paths ?? throw new ArgumentNullException(nameof(paths))).Join(PathSeparator.ToString());
 
 		/// <summary>
 		/// Joins the specified paths with the standard delimiter.
 		/// </summary>
 		/// <param name="paths">The paths.</param>
 		/// <returns>The joined paths.</returns>
-		public static string JoinPaths(params string[] paths)
-		{
-			return JoinPaths((IEnumerable<string>) paths);
-		}
+		public static string JoinPaths(params string[] paths) => JoinPaths((IEnumerable<string>) paths);
 
 		/// <summary>
 		/// Gets the path of the specified property.
@@ -288,13 +270,13 @@ namespace Faithlife.Json
 		/// <param name="expression">The property expression.</param>
 		/// <returns>The path of the specified property.</returns>
 		/// <remarks>The returned path is always lowercase.</remarks>
-		public static string GetPropertyPath<TOwner>(Expression<Func<TOwner, object>> expression)
+		public static string GetPropertyPath<TOwner>(Expression<Func<TOwner, object?>> expression)
 		{
-			if (expression == null)
+			if (expression is null)
 				throw new ArgumentNullException("expression");
 
-			string propertyPath = DoGetPropertyPath(expression.Body);
-			if (propertyPath == null)
+			var propertyPath = DoGetPropertyPath(expression.Body);
+			if (propertyPath is null)
 				throw new ArgumentException("Could not determine property path for " + expression, "expression");
 			return propertyPath;
 		}
@@ -305,7 +287,7 @@ namespace Faithlife.Json
 		/// <param name="expression">The property expression.</param>
 		/// <returns>The excluded path of the specified property.</returns>
 		/// <remarks>The returned path is always lowercase.</remarks>
-		public static string GetExcludedPropertyPath<TOwner>(Expression<Func<TOwner, object>> expression)
+		public static string GetExcludedPropertyPath<TOwner>(Expression<Func<TOwner, object?>> expression)
 		{
 			return ExcludePath(GetPropertyPath(expression));
 		}
@@ -316,9 +298,9 @@ namespace Faithlife.Json
 		/// <param name="expressions">The property expressions.</param>
 		/// <returns>The joined paths of the specified properties.</returns>
 		/// <remarks>The returned paths are always lowercase.</remarks>
-		public static string JoinPropertyPaths<TOwner>(params Expression<Func<TOwner, object>>[] expressions)
+		public static string JoinPropertyPaths<TOwner>(params Expression<Func<TOwner, object?>>[] expressions)
 		{
-			if (expressions == null)
+			if (expressions is null)
 				throw new ArgumentNullException("expressions");
 
 			return JoinPaths(expressions.Select(GetPropertyPath));
@@ -330,9 +312,9 @@ namespace Faithlife.Json
 		/// <param name="expressions">The property expressions.</param>
 		/// <returns>The joined paths of the specified properties.</returns>
 		/// <remarks>The returned paths are always lowercase.</remarks>
-		public static string JoinExcludedPropertyPaths<TOwner>(params Expression<Func<TOwner, object>>[] expressions)
+		public static string JoinExcludedPropertyPaths<TOwner>(params Expression<Func<TOwner, object?>>[] expressions)
 		{
-			if (expressions == null)
+			if (expressions is null)
 				throw new ArgumentNullException("expressions");
 
 			return JoinPaths(expressions.Select(GetExcludedPropertyPath));
@@ -343,9 +325,9 @@ namespace Faithlife.Json
 			m_rootNode = rootNode;
 		}
 
-		private static bool ShouldIncludeProperty(FilterNode node, FilterNode childNode)
+		private static bool ShouldIncludeProperty(FilterNode node, FilterNode? childNode)
 		{
-			if (childNode != null)
+			if (childNode is object)
 			{
 				// if this property or any children of this property are included, include it
 				if (childNode.IsAnyIncluded())
@@ -360,32 +342,29 @@ namespace Faithlife.Json
 			return !node.IsSiblingIncluded(childNode);
 		}
 
-		private static string DoGetPropertyPath(Expression expression)
+		private static string? DoGetPropertyPath(Expression expression)
 		{
 			// pass through method calls (most importantly collection indexers)
-			MethodCallExpression methodCallExpression = expression as MethodCallExpression;
-			if (methodCallExpression != null)
+			if (expression is MethodCallExpression methodCallExpression)
 				return DoGetPropertyPath(methodCallExpression.Object);
 
 			// pass through unary expressions (most importantly casts)
-			UnaryExpression unaryExpression = expression as UnaryExpression;
-			if (unaryExpression != null)
+			if (expression is UnaryExpression unaryExpression)
 				return DoGetPropertyPath(unaryExpression.Operand);
 
 			// detect property name
-			MemberExpression memberExpression = expression as MemberExpression;
-			if (memberExpression != null)
+			if (expression is MemberExpression memberExpression)
 			{
 				// get property name; use JsonPropertyAttribute if present
 				MemberInfo member = memberExpression.Member;
 				var attribute = member.GetCustomAttribute<JsonPropertyAttribute>();
-				string name = attribute == null || string.IsNullOrEmpty(attribute.PropertyName) ? member.Name : attribute.PropertyName;
+				string name = attribute is null || string.IsNullOrEmpty(attribute.PropertyName) ? member.Name : attribute.PropertyName;
 
 				// check for parent path
-				string parentPath = null;
-				if (memberExpression.Expression != null)
+				string? parentPath = null;
+				if (memberExpression.Expression is object)
 					parentPath = DoGetPropertyPath(memberExpression.Expression);
-				return (parentPath == null ? "" : (parentPath + PropertySeparator)) + name.ToLowerInvariant();
+				return (parentPath is null ? "" : (parentPath + PropertySeparator)) + name.ToLowerInvariant();
 			}
 
 			return null;
@@ -401,7 +380,7 @@ namespace Faithlife.Json
 		{
 			List<string> results = new List<string>();
 
-			IEnumerable<string> prefixes = null;
+			IEnumerable<string>? prefixes = null;
 			while (true)
 			{
 				int nextIndex = index < text.Length ? text.IndexOfAny(s_pathSeparators, index) : -1;
@@ -410,18 +389,18 @@ namespace Faithlife.Json
 
 				string result = text.Substring(index, nextIndex - index).Trim();
 				if (result.Length != 0)
-					prefixes = prefixes == null ? new List<string> { result } : prefixes.Select(prefix => prefix + result);
+					prefixes = prefixes?.Select(prefix => prefix + result) ?? new List<string> { result };
 
-				char nextChar = nextIndex == text.Length ? default(char) : text[nextIndex];
+				char nextChar = nextIndex == text.Length ? default : text[nextIndex];
 				if (nextChar == GroupOpener)
 				{
 					index = nextIndex + 1;
 					IEnumerable<string> groupPaths = SplitFullPaths(text, ref index);
-					prefixes = prefixes == null ? groupPaths : prefixes.SelectMany(prefix => groupPaths.Select(groupPath => prefix + groupPath));
+					prefixes = prefixes?.SelectMany(prefix => groupPaths.Select(groupPath => prefix + groupPath)) ?? groupPaths;
 				}
 				else
 				{
-					if (prefixes != null)
+					if (prefixes is object)
 						results.AddRange(prefixes);
 					prefixes = null;
 
@@ -445,9 +424,9 @@ namespace Faithlife.Json
 				m_isExcluded = isExcluded;
 			}
 
-			public static PropertyPath TryParse(string fullName, string rootPath)
+			public static PropertyPath? TryParse(string fullName, string? rootPath)
 			{
-				string prefix = string.IsNullOrWhiteSpace(rootPath) ? "" : (rootPath.Trim() + PropertySeparator);
+				string prefix = string.IsNullOrWhiteSpace(rootPath) ? "" : (rootPath!.Trim() + PropertySeparator);
 
 				var parts = (prefix + fullName).Split(new[] { PropertySeparator }, StringSplitOptions.None).Select(x => x.Trim()).ToList();
 				bool isExcluded = false;
@@ -509,7 +488,7 @@ namespace Faithlife.Json
 				return m_isIncluded == true || m_children.Values.Any(x => x.IsAnyIncluded());
 			}
 
-			public bool IsSiblingIncluded(FilterNode childNode)
+			public bool IsSiblingIncluded(FilterNode? childNode)
 			{
 				var children = m_children.Values;
 				if (children.Any(x => x != childNode && x.IsIncluded == true))
@@ -526,7 +505,7 @@ namespace Faithlife.Json
 				if (path.Parts.Count == 1)
 				{
 					bool isIncluded = !path.IsExcluded;
-					if (childNode.m_isIncluded == null)
+					if (childNode.m_isIncluded is null)
 						childNode.m_isIncluded = isIncluded;
 					else if (childNode.m_isIncluded != isIncluded)
 						childNode.m_isIncluded = null;
@@ -544,7 +523,7 @@ namespace Faithlife.Json
 					string fullName = prefix + childNode.Key;
 
 					bool? isIncluded = childNode.Value.IsIncluded;
-					if (isIncluded != null)
+					if (isIncluded is object)
 						yield return isIncluded == false ? ExcludePrefix + fullName : fullName;
 
 					foreach (string descendant in childNode.Value.RenderChildren(fullName + PropertySeparator))
@@ -670,9 +649,9 @@ namespace Faithlife.Json
 
 					// check to see if this property has been included, or an ancestor or a descendant
 					Status status = m_statusStack.Peek();
-					FilterNode node = status.Node;
-					FilterNode childNode = node == null ? null : node.FindChild(name);
-					bool isIncluded = status.IsIncluded && (node == null || ShouldIncludeProperty(node, childNode));
+					var node = status.Node;
+					var childNode = node?.FindChild(name);
+					bool isIncluded = status.IsIncluded && (node is null || ShouldIncludeProperty(node, childNode));
 					if (isIncluded)
 						m_writer.WritePropertyName(name);
 
@@ -1164,7 +1143,7 @@ namespace Faithlife.Json
 			{
 				public bool IsIncluded { get; set; }
 				public bool IsProperty { get; set; }
-				public FilterNode Node { get; set; }
+				public FilterNode? Node { get; set; }
 			}
 
 			readonly JsonWriter m_writer;

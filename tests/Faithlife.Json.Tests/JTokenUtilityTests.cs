@@ -9,7 +9,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void AsBooleanTests()
 		{
-			Assert.IsNull(((JToken) null).AsBoolean());
+			Assert.IsNull(((JToken?) null).AsBoolean());
 			Assert.IsTrue(JToken.Parse("true").AsBoolean());
 			Assert.IsFalse(JToken.Parse("false").AsBoolean());
 			Assert.IsNull(JToken.Parse("null").AsBoolean());
@@ -25,7 +25,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void AsDecimalTests()
 		{
-			Assert.IsNull(((JToken) null).AsDecimal());
+			Assert.IsNull(((JToken?) null).AsDecimal());
 			Assert.IsNull(JToken.Parse("true").AsDecimal());
 			Assert.IsNull(JToken.Parse("false").AsDecimal());
 			Assert.IsNull(JToken.Parse("null").AsDecimal());
@@ -42,7 +42,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void AsDoubleTests()
 		{
-			Assert.IsNull(((JToken) null).AsDouble());
+			Assert.IsNull(((JToken?) null).AsDouble());
 			Assert.IsNull(JToken.Parse("true").AsDouble());
 			Assert.IsNull(JToken.Parse("false").AsDouble());
 			Assert.IsNull(JToken.Parse("null").AsDouble());
@@ -59,7 +59,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void AsInt32Tests()
 		{
-			Assert.IsNull(((JToken) null).AsInt32());
+			Assert.IsNull(((JToken?) null).AsInt32());
 			Assert.IsNull(JToken.Parse("true").AsInt32());
 			Assert.IsNull(JToken.Parse("false").AsInt32());
 			Assert.IsNull(JToken.Parse("null").AsInt32());
@@ -77,7 +77,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void AsInt64Tests()
 		{
-			Assert.IsNull(((JToken) null).AsInt64());
+			Assert.IsNull(((JToken?) null).AsInt64());
 			Assert.IsNull(JToken.Parse("true").AsInt64());
 			Assert.IsNull(JToken.Parse("false").AsInt64());
 			Assert.IsNull(JToken.Parse("null").AsInt64());
@@ -94,24 +94,24 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void AsNumberTests()
 		{
-			Assert.IsNull(((JToken) null).AsNumber());
+			Assert.IsNull(((JToken?) null).AsNumber());
 			Assert.IsNull(JToken.Parse("true").AsNumber());
 			Assert.IsNull(JToken.Parse("false").AsNumber());
 			Assert.IsNull(JToken.Parse("null").AsNumber());
-			Assert.AreEqual(JToken.Parse("0").AsNumber().Type, JTokenType.Integer);
-			Assert.AreEqual(JToken.Parse("1").AsNumber().Type, JTokenType.Integer);
-			Assert.AreEqual(JToken.Parse("-0.9").AsNumber().Type, JTokenType.Float);
+			Assert.AreEqual(JToken.Parse("0").AsNumber()!.Type, JTokenType.Integer);
+			Assert.AreEqual(JToken.Parse("1").AsNumber()!.Type, JTokenType.Integer);
+			Assert.AreEqual(JToken.Parse("-0.9").AsNumber()!.Type, JTokenType.Float);
 			Assert.IsNull(JToken.Parse("\"\"").AsNumber());
 			Assert.IsNull(JToken.Parse("\"1\"").AsNumber());
 			Assert.IsNull(JToken.Parse("{}").AsNumber());
 			Assert.IsNull(JToken.Parse("[]").AsNumber());
-			Assert.AreEqual(JToken.Parse("1E+2").AsNumber().Type, JTokenType.Float);
+			Assert.AreEqual(JToken.Parse("1E+2").AsNumber()!.Type, JTokenType.Float);
 		}
 
 		[Test]
 		public void AsStringTests()
 		{
-			Assert.IsNull(((JToken) null).AsString());
+			Assert.IsNull(((JToken?) null).AsString());
 			Assert.IsNull(JToken.Parse("true").AsString());
 			Assert.IsNull(JToken.Parse("false").AsString());
 			Assert.IsNull(JToken.Parse("null").AsString());
@@ -128,11 +128,11 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void IsNullTests()
 		{
-			Assert.IsTrue(((JToken) null).IsNull());
+			Assert.IsTrue(((JToken?) null).IsNull());
 			Assert.IsTrue(JToken.Parse("null").IsNull());
 
-			Assert.IsTrue(new JValue((object) null).IsNull());
-			Assert.IsTrue(new JValue((string) null).IsNull());
+			Assert.IsTrue(new JValue((object?) null).IsNull());
+			Assert.IsTrue(new JValue((string?) null).IsNull());
 			Assert.IsTrue(JValue.CreateString(null).IsNull());
 			Assert.IsTrue(((JToken) default(bool?)).IsNull());
 			Assert.IsTrue(((JToken) default(decimal?)).IsNull());
@@ -152,7 +152,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void TryGetValueAtIndexTests()
 		{
-			Assert.IsNull(((JToken) null).TryGetValue(0));
+			Assert.IsNull(((JToken?) null).TryGetValue(0));
 			Assert.IsNull(JToken.Parse("true").TryGetValue(0));
 			Assert.IsNull(JToken.Parse("false").TryGetValue(0));
 			Assert.IsNull(JToken.Parse("null").TryGetValue(0));
@@ -172,7 +172,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void TryGetValueAtNameTests()
 		{
-			Assert.IsNull(((JToken) null).TryGetValue("key"));
+			Assert.IsNull(((JToken?) null).TryGetValue("key"));
 			Assert.IsNull(JToken.Parse("true").TryGetValue("key"));
 			Assert.IsNull(JToken.Parse("false").TryGetValue("key"));
 			Assert.IsNull(JToken.Parse("null").TryGetValue("key"));
@@ -210,8 +210,8 @@ namespace Faithlife.Json.Tests
 		[TestCase(@"[[[]]]", @"[[]]", false)]
 		public void JTokenEquality(string beforeJson, string afterJson, bool areEqual)
 		{
-			JToken before = JsonUtility.FromJson<JToken>(beforeJson);
-			JToken after = JsonUtility.FromJson<JToken>(afterJson);
+			JToken before = JsonUtility.FromJson<JToken>(beforeJson)!;
+			JToken after = JsonUtility.FromJson<JToken>(afterJson)!;
 			Assert.AreEqual(JTokenUtility.EqualityComparer.Equals(before, after), areEqual);
 			Assert.AreEqual(JTokenUtility.EqualityComparer.Equals(after, before), areEqual);
 			if (areEqual)
@@ -223,15 +223,15 @@ namespace Faithlife.Json.Tests
 		{
 			// check weird edge cases
 			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(null, null));
-			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((object) null), null));
-			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((string) null), null));
-			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((string) null), new JValue((object) null)));
+			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((object?) null), null));
+			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((string?) null), null));
+			Assert.IsTrue(JTokenUtility.EqualityComparer.Equals(new JValue((string?) null), new JValue((object?) null)));
 		}
 
 		[Test]
 		public void JObjectClone()
 		{
-			JObject before = JsonUtility.FromJson<JObject>(@"{""baz"":""qux"",""foo"":""bar""}");
+			JObject before = JsonUtility.FromJson<JObject>(@"{""baz"":""qux"",""foo"":""bar""}")!;
 			JObject after = JTokenUtility.Clone(before);
 			Assert.IsTrue(JTokenUtility.AreEqual(before, after));
 			Assert.AreNotSame(before, after);
@@ -241,8 +241,8 @@ namespace Faithlife.Json.Tests
 		public void JTokenPersistentHashCode()
 		{
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(null), 10);
-			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JValue((object) null)), 10);
-			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JValue((string) null)), 10);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JValue((object?) null)), 10);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JValue((string?) null)), 10);
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(false), -76102637);
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(true), -142453839);
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(""), 1028947972);

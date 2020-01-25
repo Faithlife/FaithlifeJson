@@ -17,19 +17,17 @@ namespace Faithlife.Json.Converters
 		/// <summary>
 		/// Implements CanConvert.
 		/// </summary>
-		public override bool CanConvert(Type objectType)
-		{
-			return objectType == typeof(T) || (s_nullableType != null && objectType == s_nullableType);
-		}
+		public override bool CanConvert(Type objectType) =>
+			objectType == typeof(T) || (s_nullableType is object && objectType == s_nullableType);
 
 		/// <summary>
 		/// Implements ReadJson.
 		/// </summary>
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			if (reader.TokenType == JsonToken.Null)
 			{
-				if (s_nullableType != null && objectType != s_nullableType)
+				if (s_nullableType is object && objectType != s_nullableType)
 					throw new JsonSerializationException("Cannot convert null to non-nullable type " + objectType.Name);
 				return null;
 			}
@@ -40,10 +38,7 @@ namespace Faithlife.Json.Converters
 		/// <summary>
 		/// Implements WriteJson.
 		/// </summary>
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-		{
-			WriteCore(writer, (T) value, serializer);
-		}
+		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => WriteCore(writer, (T) value, serializer);
 
 		/// <summary>
 		/// Reads the JSON representation of the value.
@@ -55,6 +50,6 @@ namespace Faithlife.Json.Converters
 		/// </summary>
 		protected abstract void WriteCore(JsonWriter writer, T value, JsonSerializer serializer);
 
-		static readonly Type s_nullableType = typeof(T).IsValueType() && Nullable.GetUnderlyingType(typeof(T)) == null ? typeof(Nullable<>).MakeGenericType(typeof(T)) : null;
+		static readonly Type? s_nullableType = typeof(T).IsValueType() && Nullable.GetUnderlyingType(typeof(T)) is null ? typeof(Nullable<>).MakeGenericType(typeof(T)) : null;
 	}
 }
