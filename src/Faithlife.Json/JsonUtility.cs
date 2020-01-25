@@ -91,8 +91,7 @@ namespace Faithlife.Json
 		/// <param name="outputStream">The stream to write JSON to, using UTF-8 encoding.</param>
 		public static void ToJsonStream(object value, JsonSettings? settings, Stream outputStream)
 		{
-			// don't dispose the StreamWriter to avoid closing the stream
-			StreamWriter textWriter = new StreamWriter(outputStream);
+			using var textWriter = new StreamWriter(outputStream, s_utf8NoBom, 4096, leaveOpen: true);
 			ToJsonTextWriter(value, settings, textWriter);
 			textWriter.Flush();
 		}
@@ -408,5 +407,8 @@ namespace Faithlife.Json
 				new IsoDateTimeOffsetJsonConverter(),
 				new OptionalJsonConverter(),
 			};
+
+		private static UTF8Encoding s_utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
+
 	}
 }
