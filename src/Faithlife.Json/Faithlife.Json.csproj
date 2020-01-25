@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <VersionPrefix>0.5.0</VersionPrefix>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
-    <FrameworkPathOverride Condition="'$(TargetFramework)' == 'net472' and '$(MONO_ROOT)' != ''">$(MONO_ROOT)/lib/mono/4.7.2-api/</FrameworkPathOverride>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Description>JSON serialization and patching utility code</Description>
     <PackageTags></PackageTags>
+    <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
