@@ -27,7 +27,7 @@ namespace Faithlife.Json.Tests
 			Assert.AreEqual(widget.Title, "whatever");
 			Assert.AreEqual(widget.Kind!.ReleaseDate.Second, 15);
 
-			widget = JsonUtility.FromCompressedJson<Widget>(StringUtility.Compress(jsonFrom))!;
+			widget = JsonUtility.FromCompressedJson<Widget>(StringUtility.Compress(jsonFrom)!)!; // TODO: Faithlife.Utility 0.9.0-beta2 or later
 			Assert.AreEqual(widget.Title, "whatever");
 			Assert.AreEqual(widget.Kind!.ReleaseDate.Second, 15);
 

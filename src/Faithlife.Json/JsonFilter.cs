@@ -69,8 +69,8 @@ namespace Faithlife.Json
 				return null;
 
 			FilterNode rootNode = new FilterNode();
-			foreach (PropertyPath? path in paths.WhereNotNull()) // TODO: Update Faithlife.Utility
-				rootNode.AddPath(path!);
+			foreach (var path in paths.WhereNotNull())
+				rootNode.AddPath(path);
 			return new JsonFilter(rootNode);
 		}
 
@@ -479,7 +479,7 @@ namespace Faithlife.Json
 
 			public FilterNode FindChild(string name)
 			{
-				return DictionaryUtility.GetValueOrDefault(m_children, name) ?? DictionaryUtility.GetValueOrDefault(m_children, AnyProperty);
+				return m_children.GetValueOrDefault(name) ?? m_children.GetValueOrDefault(AnyProperty);
 			}
 
 			public bool IsAnyIncluded()
