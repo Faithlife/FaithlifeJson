@@ -479,7 +479,7 @@ namespace Faithlife.Json
 
 			public FilterNode FindChild(string name)
 			{
-				return m_children.GetValueOrDefault(name) ?? m_children.GetValueOrDefault(AnyProperty);
+				return DictionaryUtility.GetValueOrDefault(m_children, name) ?? DictionaryUtility.GetValueOrDefault(m_children, AnyProperty);
 			}
 
 			public bool IsAnyIncluded()

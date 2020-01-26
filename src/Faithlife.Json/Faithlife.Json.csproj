@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <Description>JSON serialization and patching utility code</Description>
     <PackageTags></PackageTags>
@@ -11,9 +11,6 @@
   <ItemGroup>
     <PackageReference Include="Faithlife.Utility" Version="0.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="Nullable" Version="1.2.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="Nullable" Version="1.2.0" Condition=" '$(TargetFramework)' == 'netstandard2.0' " IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
   </ItemGroup>
 </Project>
