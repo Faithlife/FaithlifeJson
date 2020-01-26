@@ -9,10 +9,7 @@ namespace Faithlife.Json.Converters
 	/// </summary>
 	public class GuidLowerNoDashJsonConverter : JsonConverterBase<Guid>
 	{
-		protected override void WriteCore(JsonWriter writer, Guid value, JsonSerializer serializer)
-		{
-			writer.WriteValue(value.ToLowerNoDashString());
-		}
+		protected override void WriteCore(JsonWriter writer, Guid value, JsonSerializer serializer) => writer.WriteValue(value.ToLowerNoDashString());
 
 		protected override Guid ReadCore(JsonReader reader, JsonSerializer serializer)
 		{

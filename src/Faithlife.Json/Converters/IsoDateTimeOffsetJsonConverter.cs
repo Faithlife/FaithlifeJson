@@ -14,10 +14,8 @@ namespace Faithlife.Json.Converters
 		/// <summary>
 		/// Overrides WriteCore.
 		/// </summary>
-		protected override void WriteCore(JsonWriter writer, DateTimeOffset value, JsonSerializer serializer)
-		{
+		protected override void WriteCore(JsonWriter writer, DateTimeOffset value, JsonSerializer serializer) =>
 			writer.WriteValue(value.ToString(DateTimeOffsetUtility.Iso8601Format, CultureInfo.InvariantCulture));
-		}
 
 		/// <summary>
 		/// Overrides ReadCore.
@@ -31,7 +29,7 @@ namespace Faithlife.Json.Converters
 			if (reader.TokenType != JsonToken.String)
 				throw new JsonSerializationException("Expected string for DateTimeOffset; got " + reader.TokenType);
 
-			string text = reader.Value.ToString();
+			var text = reader.Value.ToString();
 
 			try
 			{

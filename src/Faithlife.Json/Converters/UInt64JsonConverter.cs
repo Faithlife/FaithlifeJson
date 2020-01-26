@@ -9,10 +9,7 @@ namespace Faithlife.Json.Converters
 	/// </summary>
 	public sealed class UInt64JsonConverter : JsonConverter
 	{
-		public override bool CanConvert(Type objectType)
-		{
-			return (Nullable.GetUnderlyingType(objectType) ?? objectType) == typeof(ulong);
-		}
+		public override bool CanConvert(Type objectType) => (Nullable.GetUnderlyingType(objectType) ?? objectType) == typeof(ulong);
 
 		public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{

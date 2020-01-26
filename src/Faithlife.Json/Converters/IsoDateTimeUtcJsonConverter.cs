@@ -24,7 +24,7 @@ namespace Faithlife.Json.Converters
 			if (reader.TokenType != JsonToken.String)
 				throw new JsonSerializationException("Expected string for DateTime; got " + reader.TokenType);
 
-			string text = reader.Value.ToString();
+			var text = reader.Value.ToString();
 
 			try
 			{

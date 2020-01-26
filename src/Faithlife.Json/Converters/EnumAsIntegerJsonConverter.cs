@@ -9,14 +9,11 @@ namespace Faithlife.Json.Converters
 	/// </summary>
 	public class EnumAsIntegerJsonConverter : JsonConverter
 	{
-		public override bool CanConvert(Type objectType)
-		{
-			return (Nullable.GetUnderlyingType(objectType) ?? objectType).IsEnum();
-		}
+		public override bool CanConvert(Type objectType) => (Nullable.GetUnderlyingType(objectType) ?? objectType).IsEnum();
 
 		public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
-			Type underlyingType = Nullable.GetUnderlyingType(objectType);
+			var underlyingType = Nullable.GetUnderlyingType(objectType);
 
 			if (reader.TokenType == JsonToken.Null)
 			{

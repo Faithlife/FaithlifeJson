@@ -17,8 +17,7 @@ namespace Faithlife.Json.Converters
 			if (reader.TokenType != JsonToken.Integer)
 				throw new JsonSerializationException("Expected integer for DateTime; got " + reader.TokenType);
 
-			long ticks = (long) reader.Value;
-			return DateTimeUtility.FromUnixTimestamp(ticks);
+			return DateTimeUtility.FromUnixTimestamp((long) reader.Value);
 		}
 
 		/// <summary>
@@ -26,7 +25,7 @@ namespace Faithlife.Json.Converters
 		/// </summary>
 		protected override void WriteCore(JsonWriter writer, DateTime value, JsonSerializer serializer)
 		{
-			long ticks = DateTimeUtility.ToUnixTimestamp(value);
+			var ticks = DateTimeUtility.ToUnixTimestamp(value);
 
 			if (ticks < 0)
 				throw new ArgumentOutOfRangeException("value", "Invalid epoch value.");

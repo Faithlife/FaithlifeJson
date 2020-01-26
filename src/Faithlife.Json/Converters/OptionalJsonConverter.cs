@@ -11,10 +11,7 @@ namespace Faithlife.Json.Converters
 	/// </summary>
 	public class OptionalJsonConverter : JsonConverter
 	{
-		public override bool CanConvert(Type objectType)
-		{
-			return objectType.IsGenericType() && objectType.GetGenericTypeDefinition() == typeof(Optional<>);
-		}
+		public override bool CanConvert(Type objectType) => objectType.IsGenericType() && objectType.GetGenericTypeDefinition() == typeof(Optional<>);
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
@@ -47,7 +44,7 @@ namespace Faithlife.Json.Converters
 			return constructorInfo.Invoke(new[] { optionalValue });
 		}
 
-		private static ConstructorInfo GetConstructor(Type type, Type[] types)
-			=> type.GetTypeInfo().DeclaredConstructors.FirstOrDefault(x => x.IsPublic && EnumerableUtility.AreEqual(x.GetParameters().Select(p => p.ParameterType), types));
+		private static ConstructorInfo GetConstructor(Type type, Type[] types) =>
+			type.GetTypeInfo().DeclaredConstructors.FirstOrDefault(x => x.IsPublic && EnumerableUtility.AreEqual(x.GetParameters().Select(p => p.ParameterType), types));
 	}
 }

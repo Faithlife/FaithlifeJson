@@ -11,10 +11,7 @@ namespace Faithlife.Json.Converters
 	/// with JsonConverterAttribute.</remarks>
 	public class CamelCaseEnumJsonConverter : JsonConverter
 	{
-		public override bool CanConvert(Type objectType)
-		{
-			return s_stringEnumConverter.CanConvert(objectType);
-		}
+		public override bool CanConvert(Type objectType) => s_stringEnumConverter.CanConvert(objectType);
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
@@ -28,10 +25,8 @@ namespace Faithlife.Json.Converters
 			}
 		}
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-		{
+		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>
 			s_stringEnumConverter.WriteJson(writer, value, serializer);
-		}
 
 		static readonly StringEnumConverter s_stringEnumConverter = new StringEnumConverter { CamelCaseText = true };
 	}

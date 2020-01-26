@@ -25,10 +25,7 @@ namespace Faithlife.Json
 		/// Each JSON path is one or more property names separated by periods.
 		/// A JSON path prefixed with an exclamation point is excluded rather than included.
 		/// If no JSON paths are found, this method returns null.</remarks>
-		public static JsonFilter? TryParse(string? value)
-		{
-			return TryParse(value, null);
-		}
+		public static JsonFilter? TryParse(string? value) => TryParse(value, null);
 
 		/// <summary>
 		/// Attempts to create a filter from a string.
@@ -54,7 +51,7 @@ namespace Faithlife.Json
 				if (parsedRootPath is null || parsedRootPath.IsExcluded)
 					return null;
 
-				string nextPrefix = "";
+				var nextPrefix = "";
 				foreach (var rootPathPart in parsedRootPath.Parts)
 				{
 					paths.Add(PropertyPath.TryParse(nextPrefix + AnyProperty, null));
@@ -68,7 +65,7 @@ namespace Faithlife.Json
 			if (paths.Any(x => x is null))
 				return null;
 
-			FilterNode rootNode = new FilterNode();
+			var rootNode = new FilterNode();
 			foreach (var path in paths.WhereNotNull())
 				rootNode.AddPath(path);
 			return new JsonFilter(rootNode);
@@ -78,10 +75,7 @@ namespace Faithlife.Json
 		/// Creates a filter from a string.
 		/// </summary>
 		/// <remarks>Like TryParse, but throws FormatException on failure.</remarks>
-		public static JsonFilter Parse(string value)
-		{
-			return Parse(value, null);
-		}
+		public static JsonFilter Parse(string value) => Parse(value, null);
 
 		/// <summary>
 		/// Creates a filter from a string.
@@ -160,10 +154,10 @@ namespace Faithlife.Json
 			if (propertyPath is null || propertyPath.IsExcluded)
 				return false;
 
-			FilterNode node = m_rootNode;
+			var node = m_rootNode;
 			foreach (string part in propertyPath.Parts)
 			{
-				FilterNode childNode = node.FindChild(part);
+				var childNode = node.FindChild(part);
 				if (!ShouldIncludeProperty(node, childNode))
 					return false;
 				if (childNode is null)
@@ -178,18 +172,12 @@ namespace Faithlife.Json
 		/// Gets all of the property paths.
 		/// </summary>
 		/// <remarks>Excluded paths start with an ExcludePrefix.</remarks>
-		public ReadOnlyCollection<string> GetPropertyPaths()
-		{
-			return m_rootNode.RenderChildren("").ToList().AsReadOnly();
-		}
+		public ReadOnlyCollection<string> GetPropertyPaths() => m_rootNode.RenderChildren("").ToList().AsReadOnly();
 
 		/// <summary>
 		/// Converts the filter to a parsable string.
 		/// </summary>
-		public override string ToString()
-		{
-			return JoinPaths(GetPropertyPaths());
-		}
+		public override string ToString() => JoinPaths(GetPropertyPaths());
 
 		/// <summary>
 		/// An empty JSON filter.
@@ -236,18 +224,14 @@ namespace Faithlife.Json
 		/// </summary>
 		/// <param name="expression">The property expression.</param>
 		/// <returns>True if the specified property is included by the filter.</returns>
-		public bool IsPropertyIncluded<TOwner>(Expression<Func<TOwner, object?>> expression)
-		{
-			return IsPathIncluded(GetPropertyPath(expression));
-		}
+		public bool IsPropertyIncluded<TOwner>(Expression<Func<TOwner, object?>> expression) => IsPathIncluded(GetPropertyPath(expression));
 
 		/// <summary>
 		/// Excludes the specified path with the standard prefix.
 		/// </summary>
 		/// <param name="path">The path.</param>
 		/// <returns>The excluded path.</returns>
-		public static string ExcludePath(string path) =>
-			ExcludePrefix + (path ?? throw new ArgumentNullException(nameof(path)));
+		public static string ExcludePath(string path) => ExcludePrefix + (path ?? throw new ArgumentNullException(nameof(path)));
 
 		/// <summary>
 		/// Joins the specified paths with the standard delimiter.
@@ -287,10 +271,8 @@ namespace Faithlife.Json
 		/// <param name="expression">The property expression.</param>
 		/// <returns>The excluded path of the specified property.</returns>
 		/// <remarks>The returned path is always lowercase.</remarks>
-		public static string GetExcludedPropertyPath<TOwner>(Expression<Func<TOwner, object?>> expression)
-		{
-			return ExcludePath(GetPropertyPath(expression));
-		}
+		public static string GetExcludedPropertyPath<TOwner>(Expression<Func<TOwner, object?>> expression) =>
+			ExcludePath(GetPropertyPath(expression));
 
 		/// <summary>
 		/// Joins the paths of the specified properties with the standard delimiter.
@@ -320,10 +302,7 @@ namespace Faithlife.Json
 			return JoinPaths(expressions.Select(GetExcludedPropertyPath));
 		}
 
-		private JsonFilter(FilterNode rootNode)
-		{
-			m_rootNode = rootNode;
-		}
+		private JsonFilter(FilterNode rootNode) => m_rootNode = rootNode;
 
 		private static bool ShouldIncludeProperty(FilterNode node, FilterNode? childNode)
 		{
@@ -356,9 +335,9 @@ namespace Faithlife.Json
 			if (expression is MemberExpression memberExpression)
 			{
 				// get property name; use JsonPropertyAttribute if present
-				MemberInfo member = memberExpression.Member;
+				var member = memberExpression.Member;
 				var attribute = member.GetCustomAttribute<JsonPropertyAttribute>();
-				string name = attribute is null || string.IsNullOrEmpty(attribute.PropertyName) ? member.Name : attribute.PropertyName;
+				var name = attribute is null || string.IsNullOrEmpty(attribute.PropertyName) ? member.Name : attribute.PropertyName;
 
 				// check for parent path
 				string? parentPath = null;
@@ -378,24 +357,24 @@ namespace Faithlife.Json
 
 		private static IEnumerable<string> SplitFullPaths(string text, ref int index)
 		{
-			List<string> results = new List<string>();
+			var results = new List<string>();
 
 			IEnumerable<string>? prefixes = null;
 			while (true)
 			{
-				int nextIndex = index < text.Length ? text.IndexOfAny(s_pathSeparators, index) : -1;
+				var nextIndex = index < text.Length ? text.IndexOfAny(s_pathSeparators, index) : -1;
 				if (nextIndex == -1)
 					nextIndex = text.Length;
 
-				string result = text.Substring(index, nextIndex - index).Trim();
+				var result = text.Substring(index, nextIndex - index).Trim();
 				if (result.Length != 0)
 					prefixes = prefixes?.Select(prefix => prefix + result) ?? new List<string> { result };
 
-				char nextChar = nextIndex == text.Length ? default : text[nextIndex];
+				var nextChar = nextIndex == text.Length ? default : text[nextIndex];
 				if (nextChar == GroupOpener)
 				{
 					index = nextIndex + 1;
-					IEnumerable<string> groupPaths = SplitFullPaths(text, ref index);
+					var groupPaths = SplitFullPaths(text, ref index);
 					prefixes = prefixes?.SelectMany(prefix => groupPaths.Select(groupPath => prefix + groupPath)) ?? groupPaths;
 				}
 				else
@@ -420,8 +399,8 @@ namespace Faithlife.Json
 		{
 			public PropertyPath(IEnumerable<string> parts, bool isExcluded)
 			{
-				m_parts = parts.ToList().AsReadOnly();
-				m_isExcluded = isExcluded;
+				Parts = parts.ToList().AsReadOnly();
+				IsExcluded = isExcluded;
 			}
 
 			public static PropertyPath? TryParse(string fullName, string? rootPath)
@@ -451,42 +430,21 @@ namespace Faithlife.Json
 				return parts.Count == 0 ? null : new PropertyPath(parts, isExcluded);
 			}
 
-			public ReadOnlyCollection<string> Parts
-			{
-				get { return m_parts; }
-			}
+			public ReadOnlyCollection<string> Parts { get; }
 
-			public bool IsExcluded
-			{
-				get { return m_isExcluded; }
-			}
-
-			readonly ReadOnlyCollection<string> m_parts;
-			readonly bool m_isExcluded;
+			public bool IsExcluded { get; }
 		}
 
 		private sealed class FilterNode
 		{
-			public FilterNode()
-			{
-				m_children = new Dictionary<string, FilterNode>(StringComparer.OrdinalIgnoreCase);
-			}
+			public FilterNode() => m_children = new Dictionary<string, FilterNode>(StringComparer.OrdinalIgnoreCase);
 
-			public bool? IsIncluded
-			{
-				get { return m_isIncluded; }
-			}
+			public bool? IsIncluded { get; private set;  }
 
-			public FilterNode FindChild(string name)
-			{
-				return m_children.GetValueOrDefault(name) ?? m_children.GetValueOrDefault(AnyProperty);
-			}
+			public FilterNode FindChild(string name) => m_children.GetValueOrDefault(name) ?? m_children.GetValueOrDefault(AnyProperty);
 
-			public bool IsAnyIncluded()
-			{
-				// look for any included descendant
-				return m_isIncluded == true || m_children.Values.Any(x => x.IsAnyIncluded());
-			}
+			// look for any included descendant
+			public bool IsAnyIncluded() => IsIncluded == true || m_children.Values.Any(x => x.IsAnyIncluded());
 
 			public bool IsSiblingIncluded(FilterNode? childNode)
 			{
@@ -501,14 +459,14 @@ namespace Faithlife.Json
 
 			public void AddPath(PropertyPath path)
 			{
-				FilterNode childNode = m_children.GetOrAddValue(path.Parts[0], () => new FilterNode());
+				var childNode = m_children.GetOrAddValue(path.Parts[0], () => new FilterNode());
 				if (path.Parts.Count == 1)
 				{
-					bool isIncluded = !path.IsExcluded;
-					if (childNode.m_isIncluded is null)
-						childNode.m_isIncluded = isIncluded;
-					else if (childNode.m_isIncluded != isIncluded)
-						childNode.m_isIncluded = null;
+					var isIncluded = !path.IsExcluded;
+					if (childNode.IsIncluded is null)
+						childNode.IsIncluded = isIncluded;
+					else if (childNode.IsIncluded != isIncluded)
+						childNode.IsIncluded = null;
 				}
 				else
 				{
@@ -520,19 +478,18 @@ namespace Faithlife.Json
 			{
 				foreach (var childNode in m_children.OrderBy(x => x.Key))
 				{
-					string fullName = prefix + childNode.Key;
+					var fullName = prefix + childNode.Key;
 
-					bool? isIncluded = childNode.Value.IsIncluded;
+					var isIncluded = childNode.Value.IsIncluded;
 					if (isIncluded is object)
 						yield return isIncluded == false ? ExcludePrefix + fullName : fullName;
 
-					foreach (string descendant in childNode.Value.RenderChildren(fullName + PropertySeparator))
+					foreach (var descendant in childNode.Value.RenderChildren(fullName + PropertySeparator))
 						yield return descendant;
 				}
 			}
 
 			readonly Dictionary<string, FilterNode> m_children;
-			bool? m_isIncluded;
 		}
 
 		private sealed class FilteredJsonWriter : JsonWriter
@@ -544,10 +501,7 @@ namespace Faithlife.Json
 				m_statusStack.Push(new Status { IsIncluded = true, Node = node });
 			}
 
-			public override void Flush()
-			{
-				m_writer.Flush();
-			}
+			public override void Flush() => m_writer.Flush();
 
 			public override void Close()
 			{
@@ -560,7 +514,7 @@ namespace Faithlife.Json
 				if (m_reentrancy == 0)
 				{
 					// if CloseOutput is false, don't close output on wrapped writer
-					bool closeOutputOverridden = !CloseOutput && m_writer.CloseOutput;
+					var closeOutputOverridden = !CloseOutput && m_writer.CloseOutput;
 					if (closeOutputOverridden)
 						m_writer.CloseOutput = false;
 					try
@@ -648,10 +602,10 @@ namespace Faithlife.Json
 						m_statusStack.Pop();
 
 					// check to see if this property has been included, or an ancestor or a descendant
-					Status status = m_statusStack.Peek();
+					var status = m_statusStack.Peek();
 					var node = status.Node;
 					var childNode = node?.FindChild(name);
-					bool isIncluded = status.IsIncluded && (node is null || ShouldIncludeProperty(node, childNode));
+					var isIncluded = status.IsIncluded && (node is null || ShouldIncludeProperty(node, childNode));
 					if (isIncluded)
 						m_writer.WritePropertyName(name);
 
@@ -1116,7 +1070,7 @@ namespace Faithlife.Json
 					return false;
 
 				// push a non-property node to track depth
-				Status status = m_statusStack.Peek();
+				var status = m_statusStack.Peek();
 				m_statusStack.Push(new Status { IsIncluded = status.IsIncluded, Node = status.Node });
 				return status.IsIncluded;
 			}
@@ -1134,10 +1088,7 @@ namespace Faithlife.Json
 				return m_statusStack.Pop().IsIncluded;
 			}
 
-			private bool ShouldWriteValue()
-			{
-				return m_reentrancy == 0 && m_statusStack.Peek().IsIncluded;
-			}
+			private bool ShouldWriteValue() => m_reentrancy == 0 && m_statusStack.Peek().IsIncluded;
 
 			private sealed class Status
 			{

@@ -50,11 +50,8 @@ namespace Faithlife.Json
 		/// <param name="value">The value.</param>
 		/// <param name="settings">The settings.</param>
 		/// <param name="jsonWriter">The JSON writer to write JSON to.</param>
-		public static void ToJsonWriter(object? value, JsonSettings? settings, JsonWriter jsonWriter)
-		{
-			JsonSerializer serializer = JsonSerializer.Create(CreateDefaultJsonSerializerSettings(settings));
-			serializer.Serialize(jsonWriter, value);
-		}
+		public static void ToJsonWriter(object? value, JsonSettings? settings, JsonWriter jsonWriter) =>
+			JsonSerializer.Create(CreateDefaultJsonSerializerSettings(settings)).Serialize(jsonWriter, value);
 
 		/// <summary>
 		/// Converts the object to a JSON text writer.
@@ -71,7 +68,7 @@ namespace Faithlife.Json
 		/// <param name="textWriter">The text writer to write JSON to.</param>
 		public static void ToJsonTextWriter(object? value, JsonSettings? settings, TextWriter textWriter)
 		{
-			Formatting formatting = GetJsonFormatting(settings);
+			var formatting = GetJsonFormatting(settings);
 			using var jsonTextWriter = new JsonTextWriter(textWriter) { Formatting = formatting, CloseOutput = false };
 			ToJsonWriter(value, settings, jsonTextWriter);
 		}
