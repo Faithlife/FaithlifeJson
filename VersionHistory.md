@@ -8,6 +8,12 @@ Prefix the description of the change with `[major]`, `[minor]`, or `[patch]` in 
 
 ## Released
 
+### 0.6.0
+
+* Only target `netstandard2.0`.
+* Build with C# 8.
+* Add nullability annotations to public API.
+
 ### 0.5.0
 
 * Remove dependency on Faithlife.Analyzers.
