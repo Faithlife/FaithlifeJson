@@ -8,6 +8,11 @@ Prefix the description of the change with `[major]`, `[minor]`, or `[patch]` in 
 
 ## Released
 
+### 0.7.0 Beta 1
+
+* Add `netstandard2.1` target framework.
+* Update Faithlife.Utility dependency to 0.9.0-beta1.
+
 ### 0.6.0
 
 * Only target `netstandard2.0`.
