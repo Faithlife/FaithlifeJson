@@ -1,6 +1,6 @@
 # Version History
 
-### 0.7.0 Beta 1
+### 0.7.0
 
 * Add `netstandard2.1` target framework.
 * Update Faithlife.Utility dependency to 0.9.0-beta1.

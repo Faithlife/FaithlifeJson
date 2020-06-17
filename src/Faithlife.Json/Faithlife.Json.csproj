@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Faithlife.Utility" Version="0.9.0-beta1" />
+    <PackageReference Include="Faithlife.Utility" Version="0.9.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="Nullable" Version="1.2.0" Condition=" '$(TargetFramework)' == 'netstandard2.0' " IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
   </ItemGroup>
