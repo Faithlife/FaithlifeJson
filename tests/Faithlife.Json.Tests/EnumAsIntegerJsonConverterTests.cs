@@ -1,7 +1,7 @@
 using System;
 using Faithlife.Json.Converters;
-using NUnit.Framework;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Faithlife.Json.Tests
 {
@@ -47,7 +47,7 @@ namespace Faithlife.Json.Tests
 			None = 0,
 			Flag1 = 1,
 			Flag2 = 2,
-			Flag3 = 4
+			Flag3 = 4,
 		}
 
 		private enum LittleEnum : short

@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using Faithlife.Json.Converters;
-using NUnit.Framework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NUnit.Framework;
 
 namespace Faithlife.Json.Tests
 {

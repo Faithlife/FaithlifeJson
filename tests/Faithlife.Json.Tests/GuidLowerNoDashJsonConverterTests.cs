@@ -1,7 +1,7 @@
 using System;
 using Faithlife.Json.Converters;
-using NUnit.Framework;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Faithlife.Json.Tests
 {
@@ -34,7 +34,7 @@ namespace Faithlife.Json.Tests
 			Assert.Throws<JsonSerializationException>(() => JsonConvert.DeserializeObject<Guids>(@"{""Start"":""5F346a0da38b40c2928944c5ffe40752"",""End"":null}", new GuidLowerNoDashJsonConverter()));
 		}
 
-		public class Guids
+		private class Guids
 		{
 			public Guid Start { get; set; }
 			public Guid? End { get; set; }

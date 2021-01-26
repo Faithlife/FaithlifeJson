@@ -1,8 +1,8 @@
 using System;
 using Faithlife.Json.Converters;
 using Faithlife.Utility;
-using NUnit.Framework;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Faithlife.Json.Tests
 {
@@ -12,7 +12,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void SaveAndLoad()
 		{
-			GoodOptionals optionals = new GoodOptionals();
+			GoodOptionals optionals = default(GoodOptionals);
 			SaveAndLoad(optionals, @"{}");
 			optionals.MyBoolean = false;
 			SaveAndLoad(optionals, @"{""MyBoolean"":false}");
@@ -30,7 +30,7 @@ namespace Faithlife.Json.Tests
 		[Test]
 		public void SaveBadOptionals()
 		{
-			BadOptionals optionals = new BadOptionals();
+			BadOptionals optionals = default(BadOptionals);
 			SaveBad(optionals);
 			optionals.MyBoolean = false;
 			SaveBad(optionals);
@@ -45,7 +45,7 @@ namespace Faithlife.Json.Tests
 			SaveBad(optionals);
 		}
 
-		public struct GoodOptionals
+		private struct GoodOptionals
 		{
 			[JsonProperty("MyBoolean", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Include), DefaultValueDefault(typeof(Optional<bool>))]
 			public Optional<bool> MyBoolean { get; set; }
@@ -54,7 +54,7 @@ namespace Faithlife.Json.Tests
 			public Optional<bool?> MyNullableBoolean { get; set; }
 		}
 
-		public struct BadOptionals
+		private struct BadOptionals
 		{
 			[JsonProperty("MyBoolean")]
 			public Optional<bool> MyBoolean { get; set; }

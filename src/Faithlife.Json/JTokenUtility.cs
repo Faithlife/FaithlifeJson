@@ -210,7 +210,8 @@ namespace Faithlife.Json
 		/// <param name="token">The token.</param>
 		/// <returns>The clone.</returns>
 		[return: NotNullIfNotNull("token")]
-		public static T? Clone<T>(T? token) where T : JToken => (T?) token?.DeepClone();
+		public static T? Clone<T>(T? token)
+			where T : JToken => (T?) token?.DeepClone();
 
 		private sealed class OurJTokenEqualityComparer : IEqualityComparer<JToken?>
 		{

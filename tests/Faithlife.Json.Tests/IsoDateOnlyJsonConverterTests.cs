@@ -1,7 +1,7 @@
 using System;
 using Faithlife.Json.Converters;
-using NUnit.Framework;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Faithlife.Json.Tests
 {
@@ -31,7 +31,7 @@ namespace Faithlife.Json.Tests
 			dates.End.ShouldBe(twelves);
 		}
 
-		public class DateTimes
+		private class DateTimes
 		{
 			public DateTime Start { get; set; }
 			public DateTime? End { get; set; }

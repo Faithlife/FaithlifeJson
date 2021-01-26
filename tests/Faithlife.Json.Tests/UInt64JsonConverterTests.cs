@@ -25,8 +25,8 @@ namespace Faithlife.Json.Tests
 			const ulong longMaxValue = long.MaxValue;
 			JsonConvert.DeserializeObject<ulong?>("", new UInt64JsonConverter()).ShouldBe(null);
 			JsonConvert.DeserializeObject<ulong?>("null", new UInt64JsonConverter()).ShouldBe(null);
-			JsonConvert.DeserializeObject<ulong>("\"0\"", new UInt64JsonConverter()).ShouldBe((ulong) 0);
-			JsonConvert.DeserializeObject<ulong>("0", new UInt64JsonConverter()).ShouldBe((ulong) 0);
+			JsonConvert.DeserializeObject<ulong>("\"0\"", new UInt64JsonConverter()).ShouldBe(0UL);
+			JsonConvert.DeserializeObject<ulong>("0", new UInt64JsonConverter()).ShouldBe(0UL);
 			JsonConvert.DeserializeObject<ulong>("\"9223372036854775807\"", new UInt64JsonConverter()).ShouldBe(longMaxValue);
 			JsonConvert.DeserializeObject<ulong>("9223372036854775807", new UInt64JsonConverter()).ShouldBe(longMaxValue);
 			JsonConvert.DeserializeObject<ulong>("\"9223372036854775808\"", new UInt64JsonConverter()).ShouldBe(longMaxValue + 1);

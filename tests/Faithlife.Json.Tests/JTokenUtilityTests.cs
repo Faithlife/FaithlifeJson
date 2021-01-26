@@ -249,10 +249,10 @@ namespace Faithlife.Json.Tests
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode("hi"), -1608206286);
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(123), 567975604);
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((short) 123), 567975604);
-			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((long) 123), 567975604);
-			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((double) 123), 1436994632);
-			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((float) 123), 1436994632);
-			Assert.AreEqual(JTokenUtility.GetPersistentHashCode((decimal) 123), 1436994632);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(123L), 567975604);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(123D), 1436994632);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(123F), 1436994632);
+			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(123M), 1436994632);
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JObject()), 1430463807);
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JObject { { "hi", 123 }, { "there", 456 } }), 2095528233);
 			Assert.AreEqual(JTokenUtility.GetPersistentHashCode(new JObject { { "there", 456 }, { "hi", 123 } }), 2095528233);

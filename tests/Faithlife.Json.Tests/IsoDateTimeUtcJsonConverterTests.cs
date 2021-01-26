@@ -1,7 +1,7 @@
 using System;
 using Faithlife.Json.Converters;
-using NUnit.Framework;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Faithlife.Json.Tests
 {
@@ -23,7 +23,7 @@ namespace Faithlife.Json.Tests
 			JsonSerializerSettings settings = new JsonSerializerSettings
 			{
 				DateParseHandling = DateParseHandling.None,
-				Converters = { new IsoDateTimeUtcJsonConverter() }
+				Converters = { new IsoDateTimeUtcJsonConverter() },
 			};
 			dates = JsonConvert.DeserializeObject<DateTimes>(@"{""Start"":""2011-11-11T11:11:11Z"",""End"":null}", settings);
 			dates.Start.ShouldBe(elevens);
@@ -42,7 +42,7 @@ namespace Faithlife.Json.Tests
 			Assert.Throws<JsonSerializationException>(() => JsonUtility.FromJson<DateTimeOffset>(@"""2011-11-11T11:11Z"""));
 		}
 
-		public class DateTimes
+		private class DateTimes
 		{
 			public DateTime Start { get; set; }
 			public DateTime? End { get; set; }

@@ -28,6 +28,6 @@ namespace Faithlife.Json.Converters
 			}
 		}
 
-		const string c_dateFormat = "yyyy'-'MM'-'dd";
+		private const string c_dateFormat = "yyyy'-'MM'-'dd";
 	}
 }

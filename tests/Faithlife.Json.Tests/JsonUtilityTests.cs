@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Faithlife.Json.Converters;
 using Faithlife.Utility;
-using NUnit.Framework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 namespace Faithlife.Json.Tests
 {
@@ -133,38 +133,38 @@ namespace Faithlife.Json.Tests
 			}
 		}
 
-		public class Widget
+		private class Widget
 		{
 			public string? Title { get; set; }
 
 			public WidgetKind? Kind { get; set; }
 		}
 
-		public class WidgetKind
+		private class WidgetKind
 		{
 			public double WeightInGrams { get; set; }
 
 			public DateTime ReleaseDate { get; set; }
 		}
 
-		public class HasNullableValue
+		private class HasNullableValue
 		{
 			public SomeValue? Value { get; set; }
 		}
 
 		[JsonConverter(typeof(SomeValueJsonConverter))]
-		public struct SomeValue
+		private struct SomeValue
 		{
 			public string? Text { get; set; }
 		}
 
-		public class HasRefProperty
+		private class HasRefProperty
 		{
 			[JsonProperty("$ref")]
 			public string? Ref { get; set; }
 		}
 
-		public class SomeValueJsonConverter : JsonConverter
+		private class SomeValueJsonConverter : JsonConverter
 		{
 			public override bool CanConvert(Type objectType)
 			{

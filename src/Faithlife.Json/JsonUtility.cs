@@ -392,8 +392,8 @@ namespace Faithlife.Json
 			NamingStrategy = new CamelCaseNamingStrategy
 			{
 				OverrideSpecifiedNames = false,
-				ProcessDictionaryKeys = false
-			}
+				ProcessDictionaryKeys = false,
+			},
 		};
 
 		private static readonly IReadOnlyList<JsonConverter> s_defaultConverters =
@@ -406,6 +406,5 @@ namespace Faithlife.Json
 			};
 
 		private static UTF8Encoding s_utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
-
 	}
 }

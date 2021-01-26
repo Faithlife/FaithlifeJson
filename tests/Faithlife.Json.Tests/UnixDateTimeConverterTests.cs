@@ -1,7 +1,7 @@
 using System;
 using Faithlife.Json.Converters;
-using NUnit.Framework;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Faithlife.Json.Tests
 {
@@ -52,6 +52,6 @@ namespace Faithlife.Json.Tests
 			Assert.Throws<JsonSerializationException>(() => JsonConvert.DeserializeObject<DateTime>("null", s_converter));
 		}
 
-		static readonly UnixDateTimeConverter s_converter = new UnixDateTimeConverter();
+		private static readonly UnixDateTimeConverter s_converter = new UnixDateTimeConverter();
 	}
 }

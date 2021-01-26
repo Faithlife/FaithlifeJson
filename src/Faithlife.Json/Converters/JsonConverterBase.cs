@@ -50,6 +50,6 @@ namespace Faithlife.Json.Converters
 		/// </summary>
 		protected abstract void WriteCore(JsonWriter writer, T value, JsonSerializer serializer);
 
-		static readonly Type? s_nullableType = typeof(T).IsValueType() && Nullable.GetUnderlyingType(typeof(T)) is null ? typeof(Nullable<>).MakeGenericType(typeof(T)) : null;
+		private static readonly Type? s_nullableType = typeof(T).IsValueType() && Nullable.GetUnderlyingType(typeof(T)) is null ? typeof(Nullable<>).MakeGenericType(typeof(T)) : null;
 	}
 }

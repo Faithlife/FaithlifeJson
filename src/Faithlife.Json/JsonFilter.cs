@@ -182,7 +182,7 @@ namespace Faithlife.Json
 		/// <summary>
 		/// An empty JSON filter.
 		/// </summary>
-		public static JsonFilter Empty = new JsonFilter(new FilterNode());
+		public static readonly JsonFilter Empty = new JsonFilter(new FilterNode());
 
 		/// <summary>
 		/// Character used to separate properties in a path.
@@ -489,7 +489,7 @@ namespace Faithlife.Json
 				}
 			}
 
-			readonly Dictionary<string, FilterNode> m_children;
+			private readonly Dictionary<string, FilterNode> m_children;
 		}
 
 		private sealed class FilteredJsonWriter : JsonWriter
@@ -1097,13 +1097,13 @@ namespace Faithlife.Json
 				public FilterNode? Node { get; set; }
 			}
 
-			readonly JsonWriter m_writer;
-			readonly Stack<Status> m_statusStack;
-			int m_reentrancy;
+			private readonly JsonWriter m_writer;
+			private readonly Stack<Status> m_statusStack;
+			private int m_reentrancy;
 		}
 
-		static readonly char[] s_pathSeparators = { PathSeparator, AlternatePathSeparator, GroupOpener, GroupCloser };
+		private static readonly char[] s_pathSeparators = { PathSeparator, AlternatePathSeparator, GroupOpener, GroupCloser };
 
-		readonly FilterNode m_rootNode;
+		private readonly FilterNode m_rootNode;
 	}
 }

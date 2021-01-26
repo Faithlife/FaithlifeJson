@@ -219,7 +219,7 @@ namespace Faithlife.Json.Tests
 			public NameDto? Name { get; set; }
 		}
 
-		public sealed class InterestingItemDto
+		private sealed class InterestingItemDto
 		{
 			public string? Id { get; set; }
 

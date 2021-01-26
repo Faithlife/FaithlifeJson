@@ -28,6 +28,6 @@ namespace Faithlife.Json.Converters
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>
 			s_stringEnumConverter.WriteJson(writer, value, serializer);
 
-		static readonly StringEnumConverter s_stringEnumConverter = new StringEnumConverter { CamelCaseText = true };
+		private static readonly StringEnumConverter s_stringEnumConverter = new StringEnumConverter { CamelCaseText = true };
 	}
 }
