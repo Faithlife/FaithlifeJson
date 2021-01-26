@@ -2,9 +2,7 @@
 
 Helpers for working with JSON data.
 
-[![AppVeyor](https://img.shields.io/appveyor/ci/Faithlife/faithlifejson/master.svg)](https://ci.appveyor.com/project/Faithlife/faithlifejson) [![NuGet](https://img.shields.io/nuget/v/Faithlife.Json.svg)](https://www.nuget.org/packages/Faithlife.Json)
+[![Build](https://github.com/Faithlife/FaithlifeJson/workflows/Build/badge.svg)](https://github.com/Faithlife/FaithlifeJson/actions?query=workflow%3ABuild) [![NuGet](https://img.shields.io/nuget/v/Faithlife.Json.svg)](https://www.nuget.org/packages/Faithlife.Json)
 
-* Documentation: https://faithlife.github.io/FaithlifeJson/
-* License: [MIT](LICENSE)
-* [Version History](VersionHistory.md)
-* [Contributing Guidelines](CONTRIBUTING.md)
+* [Documentation](https://faithlife.github.io/FaithlifeJson/)
+* [Release Notes](ReleaseNotes.md)
