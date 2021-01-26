@@ -3,7 +3,7 @@
 Returns true if the JToken is null or represents null.
 
 ```csharp
-public static bool IsNull(this JToken jToken)
+public static bool IsNull(this JToken? jToken)
 ```
 
 ## See Also

@@ -3,7 +3,7 @@
 Gets the path of the specified property.
 
 ```csharp
-public static string GetPropertyPath<TOwner>(Expression<Func<TOwner, object>> expression)
+public static string GetPropertyPath<TOwner>(Expression<Func<TOwner, object?>> expression)
 ```
 
 | parameter | description |

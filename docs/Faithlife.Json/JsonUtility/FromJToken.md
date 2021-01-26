@@ -3,7 +3,7 @@
 Creates an object from a JToken.
 
 ```csharp
-public static object FromJToken(JToken json, Type type)
+public static object? FromJToken(JToken? json, Type type)
 ```
 
 | parameter | description |
@@ -27,7 +27,7 @@ The object.
 Creates an object from a JToken.
 
 ```csharp
-public static object FromJToken(JToken json, Type type, JsonSettings settings)
+public static object? FromJToken(JToken? json, Type type, JsonSettings? settings)
 ```
 
 | parameter | description |
@@ -53,7 +53,7 @@ The object.
 Creates an object from a JToken.
 
 ```csharp
-public static T FromJToken<T>(JToken json)
+public static T FromJToken<T>(JToken? json)
 ```
 
 | parameter | description |
@@ -77,7 +77,7 @@ The object.
 Creates an object from a JToken.
 
 ```csharp
-public static T FromJToken<T>(JToken json, JsonSettings settings)
+public static T FromJToken<T>(JToken? json, JsonSettings? settings)
 ```
 
 | parameter | description |

@@ -3,7 +3,7 @@
 Converts the object to JSON.
 
 ```csharp
-public static string ToJson(object value)
+public static string ToJson(object? value)
 ```
 
 | parameter | description |
@@ -26,7 +26,7 @@ The JSON.
 Converts the object to JSON.
 
 ```csharp
-public static string ToJson(object value, JsonSettings settings)
+public static string ToJson(object? value, JsonSettings? settings)
 ```
 
 | parameter | description |

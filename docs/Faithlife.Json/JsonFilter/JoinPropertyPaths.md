@@ -4,7 +4,7 @@ Joins the paths of the specified properties with the standard delimiter.
 
 ```csharp
 public static string JoinPropertyPaths<TOwner>(
-    params Expression<Func<TOwner, object>>[] expressions)
+    params Expression<Func<TOwner, object?>>[] expressions)
 ```
 
 | parameter | description |

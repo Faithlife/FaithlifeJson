@@ -3,7 +3,7 @@
 Gets a persistent hash code for the token.
 
 ```csharp
-public static int GetPersistentHashCode(JToken token)
+public static int GetPersistentHashCode(JToken? token)
 ```
 
 | parameter | description |

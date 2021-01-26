@@ -3,7 +3,7 @@
 Filters data from the specified token.
 
 ```csharp
-public JToken FilterToken(JToken token)
+public JToken? FilterToken(JToken? token)
 ```
 
 | parameter | description |

@@ -3,7 +3,7 @@
 Returns a Double corresponding to the JToken if possible.
 
 ```csharp
-public static double? AsDouble(this JToken jToken)
+public static double? AsDouble(this JToken? jToken)
 ```
 
 ## Return Value

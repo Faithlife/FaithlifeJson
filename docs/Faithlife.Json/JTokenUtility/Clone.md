@@ -3,7 +3,7 @@
 Clones the specified Json.NET token.
 
 ```csharp
-public static T Clone<T>(T token)
+public static T? Clone<T>(T? token)
     where T : JToken
 ```
 

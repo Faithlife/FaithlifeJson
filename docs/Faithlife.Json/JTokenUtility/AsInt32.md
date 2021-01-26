@@ -3,7 +3,7 @@
 Returns an Int32 corresponding to the JToken if possible.
 
 ```csharp
-public static int? AsInt32(this JToken jToken)
+public static int? AsInt32(this JToken? jToken)
 ```
 
 ## Return Value

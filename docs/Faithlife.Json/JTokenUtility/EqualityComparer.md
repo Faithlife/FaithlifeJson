@@ -3,7 +3,7 @@
 An equality comparer for JToken.
 
 ```csharp
-public static readonly IEqualityComparer<JToken> EqualityComparer;
+public static readonly IEqualityComparer<JToken?> EqualityComparer;
 ```
 
 ## Remarks

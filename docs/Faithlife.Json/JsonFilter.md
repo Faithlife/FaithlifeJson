@@ -10,7 +10,7 @@ public sealed class JsonFilter
 
 | name | description |
 | --- | --- |
-| static [Empty](JsonFilter/Empty.md) | An empty JSON filter. |
+| static readonly [Empty](JsonFilter/Empty.md) | An empty JSON filter. |
 | static [Parse](JsonFilter/Parse.md)(…) | Creates a filter from a string. (2 methods) |
 | static [TryParse](JsonFilter/TryParse.md)(…) | Attempts to create a filter from a string. (2 methods) |
 | [CreateFilteredJsonWriter](JsonFilter/CreateFilteredJsonWriter.md)(…) | Creates a JSON writer that filters JSON as it is written to the wrapped JSON writer. |

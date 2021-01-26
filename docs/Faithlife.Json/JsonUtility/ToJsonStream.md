@@ -23,7 +23,7 @@ public static void ToJsonStream(object value, Stream outputStream)
 Converts the object to a JSON stream.
 
 ```csharp
-public static void ToJsonStream(object value, JsonSettings settings, Stream outputStream)
+public static void ToJsonStream(object value, JsonSettings? settings, Stream outputStream)
 ```
 
 | parameter | description |

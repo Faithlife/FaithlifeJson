@@ -3,7 +3,7 @@
 Additional converters to use when reading/writing JSON.
 
 ```csharp
-public IReadOnlyList<JsonConverter> Converters { get; set; }
+public IReadOnlyList<JsonConverter>? Converters { get; set; }
 ```
 
 ## See Also

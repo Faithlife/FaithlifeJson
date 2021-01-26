@@ -4,7 +4,7 @@ Joins the excluded paths of the specified properties with the standard delimiter
 
 ```csharp
 public static string JoinExcludedPropertyPaths<TOwner>(
-    params Expression<Func<TOwner, object>>[] expressions)
+    params Expression<Func<TOwner, object?>>[] expressions)
 ```
 
 | parameter | description |

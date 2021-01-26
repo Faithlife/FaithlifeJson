@@ -3,7 +3,7 @@
 Gets the excluded path of the specified property.
 
 ```csharp
-public static string GetExcludedPropertyPath<TOwner>(Expression<Func<TOwner, object>> expression)
+public static string GetExcludedPropertyPath<TOwner>(Expression<Func<TOwner, object?>> expression)
 ```
 
 | parameter | description |

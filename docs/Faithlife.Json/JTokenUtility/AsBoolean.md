@@ -3,7 +3,7 @@
 Returns a Boolean corresponding to the JToken if possible.
 
 ```csharp
-public static bool? AsBoolean(this JToken jToken)
+public static bool? AsBoolean(this JToken? jToken)
 ```
 
 ## Return Value

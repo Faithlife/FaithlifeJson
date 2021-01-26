@@ -31,7 +31,7 @@ This method converts the object to JSON, filtering out data as appropriate, and 
 Filters data from the specified object.
 
 ```csharp
-public T FilterObject<T>(T value, JsonSettings settings)
+public T FilterObject<T>(T value, JsonSettings? settings)
 ```
 
 | parameter | description |

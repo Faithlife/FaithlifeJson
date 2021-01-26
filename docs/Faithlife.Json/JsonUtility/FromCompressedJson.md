@@ -3,7 +3,7 @@
 Creates an object from compressed JSON.
 
 ```csharp
-public static object FromCompressedJson(byte[] json, Type type)
+public static object? FromCompressedJson(byte[] json, Type type)
 ```
 
 | parameter | description |
@@ -34,7 +34,7 @@ The object.
 Creates an object from compressed JSON.
 
 ```csharp
-public static object FromCompressedJson(byte[] json, Type type, JsonSettings settings)
+public static object? FromCompressedJson(byte[] json, Type type, JsonSettings? settings)
 ```
 
 | parameter | description |
@@ -98,7 +98,7 @@ The object.
 Creates an object from compressed JSON.
 
 ```csharp
-public static T FromCompressedJson<T>(byte[] json, JsonSettings settings)
+public static T FromCompressedJson<T>(byte[] json, JsonSettings? settings)
 ```
 
 | parameter | description |

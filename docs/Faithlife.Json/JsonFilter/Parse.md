@@ -22,7 +22,7 @@ Like TryParse, but throws FormatException on failure.
 Creates a filter from a string.
 
 ```csharp
-public static JsonFilter Parse(string value, string rootPath)
+public static JsonFilter Parse(string value, string? rootPath)
 ```
 
 ## Remarks

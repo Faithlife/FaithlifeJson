@@ -3,7 +3,7 @@
 Determines if the specified property is included by the filter.
 
 ```csharp
-public bool IsPropertyIncluded<TOwner>(Expression<Func<TOwner, object>> expression)
+public bool IsPropertyIncluded<TOwner>(Expression<Func<TOwner, object?>> expression)
 ```
 
 | parameter | description |

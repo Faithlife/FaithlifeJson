@@ -3,7 +3,7 @@
 Returns the token as a JValue if it corresponds to a number.
 
 ```csharp
-public static JValue AsNumber(this JToken jToken)
+public static JValue? AsNumber(this JToken? jToken)
 ```
 
 ## Return Value

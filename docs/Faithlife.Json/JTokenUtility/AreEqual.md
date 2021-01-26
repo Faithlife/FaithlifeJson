@@ -3,7 +3,7 @@
 Check two JTokens for equality.
 
 ```csharp
-public static bool AreEqual(JToken left, JToken right)
+public static bool AreEqual(JToken? left, JToken? right)
 ```
 
 | parameter | description |

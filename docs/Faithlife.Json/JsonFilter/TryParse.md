@@ -3,7 +3,7 @@
 Attempts to create a filter from a string.
 
 ```csharp
-public static JsonFilter TryParse(string value)
+public static JsonFilter? TryParse(string? value)
 ```
 
 | parameter | description |
@@ -30,7 +30,7 @@ A filter string is one or more JSON paths separated by commas. Each JSON path is
 Attempts to create a filter from a string.
 
 ```csharp
-public static JsonFilter TryParse(string value, string rootPath)
+public static JsonFilter? TryParse(string? value, string? rootPath)
 ```
 
 | parameter | description |

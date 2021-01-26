@@ -26,7 +26,7 @@ The number of bytes used by the JSON of an object.
 Returns the number of bytes used by the JSON of an object.
 
 ```csharp
-public static int ToJsonByteCount(object value, JsonSettings settings)
+public static int ToJsonByteCount(object value, JsonSettings? settings)
 ```
 
 | parameter | description |

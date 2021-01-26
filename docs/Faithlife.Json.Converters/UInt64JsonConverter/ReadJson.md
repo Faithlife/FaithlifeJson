@@ -1,7 +1,7 @@
 # UInt64JsonConverter.ReadJson method
 
 ```csharp
-public override object ReadJson(JsonReader reader, Type objectType, object existingValue, 
+public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, 
     JsonSerializer serializer)
 ```
 

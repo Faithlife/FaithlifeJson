@@ -3,7 +3,7 @@
 Creates an object from JSON.
 
 ```csharp
-public static object FromJsonTextReader(TextReader textReader, Type type)
+public static object? FromJsonTextReader(TextReader textReader, Type type)
 ```
 
 | parameter | description |
@@ -34,7 +34,7 @@ The object.
 Creates an object from JSON.
 
 ```csharp
-public static object FromJsonTextReader(TextReader textReader, Type type, JsonSettings settings)
+public static object? FromJsonTextReader(TextReader textReader, Type type, JsonSettings? settings)
 ```
 
 | parameter | description |
@@ -97,7 +97,7 @@ The object.
 Creates an object from JSON.
 
 ```csharp
-public static T FromJsonTextReader<T>(TextReader textReader, JsonSettings settings)
+public static T FromJsonTextReader<T>(TextReader textReader, JsonSettings? settings)
 ```
 
 | parameter | description |

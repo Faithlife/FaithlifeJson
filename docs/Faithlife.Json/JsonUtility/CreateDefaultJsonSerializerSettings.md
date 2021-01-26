@@ -22,7 +22,7 @@ The serialization settings used by ToJson and FromJson.
 Creates default serialization settings.
 
 ```csharp
-public static JsonSerializerSettings CreateDefaultJsonSerializerSettings(JsonSettings settings)
+public static JsonSerializerSettings CreateDefaultJsonSerializerSettings(JsonSettings? settings)
 ```
 
 ## Return Value

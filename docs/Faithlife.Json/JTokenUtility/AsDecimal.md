@@ -3,7 +3,7 @@
 Returns a Decimal corresponding to the JToken if possible.
 
 ```csharp
-public static decimal? AsDecimal(this JToken jToken)
+public static decimal? AsDecimal(this JToken? jToken)
 ```
 
 ## Return Value

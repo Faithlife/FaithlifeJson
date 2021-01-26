@@ -3,7 +3,7 @@
 Gets the JSON formatting specified by the settings.
 
 ```csharp
-public static Formatting GetJsonFormatting(JsonSettings settings)
+public static Formatting GetJsonFormatting(JsonSettings? settings)
 ```
 
 | parameter | description |

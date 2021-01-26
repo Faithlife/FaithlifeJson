@@ -26,7 +26,7 @@ The JToken.
 Converts the object to a JToken.
 
 ```csharp
-public static JToken ToJToken(object value, JsonSettings settings)
+public static JToken ToJToken(object value, JsonSettings? settings)
 ```
 
 | parameter | description |

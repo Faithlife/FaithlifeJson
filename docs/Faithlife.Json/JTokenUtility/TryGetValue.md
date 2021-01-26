@@ -3,7 +3,7 @@
 Returns the specified array item if possible.
 
 ```csharp
-public static JToken TryGetValue(this JToken jToken, int itemIndex)
+public static JToken? TryGetValue(this JToken? jToken, int itemIndex)
 ```
 
 | parameter | description |
@@ -27,7 +27,7 @@ This method returns null if the JToken is null, or if it doesn't contain an arra
 Returns the specified property value if possible.
 
 ```csharp
-public static JToken TryGetValue(this JToken jToken, string propertyName)
+public static JToken? TryGetValue(this JToken? jToken, string? propertyName)
 ```
 
 | parameter | description |

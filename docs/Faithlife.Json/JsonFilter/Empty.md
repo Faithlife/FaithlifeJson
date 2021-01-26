@@ -3,7 +3,7 @@
 An empty JSON filter.
 
 ```csharp
-public static JsonFilter Empty;
+public static readonly JsonFilter Empty;
 ```
 
 ## See Also

@@ -23,7 +23,7 @@ public static void ToJsonWriter(object value, JsonWriter jsonWriter)
 Converts the object to a JSON writer.
 
 ```csharp
-public static void ToJsonWriter(object value, JsonSettings settings, JsonWriter jsonWriter)
+public static void ToJsonWriter(object? value, JsonSettings? settings, JsonWriter jsonWriter)
 ```
 
 | parameter | description |
