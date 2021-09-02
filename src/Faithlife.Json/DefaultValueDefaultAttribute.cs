@@ -15,6 +15,12 @@ namespace Faithlife.Json
 		public DefaultValueDefaultAttribute(Type type)
 			: base(Activator.CreateInstance(type))
 		{
+			Type = type;
 		}
+
+		/// <summary>
+		/// The type.
+		/// </summary>
+		public Type Type { get; }
 	}
 }

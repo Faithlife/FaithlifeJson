@@ -28,7 +28,7 @@ namespace Faithlife.Json.Converters
 			var ticks = DateTimeUtility.ToUnixTimestamp(value);
 
 			if (ticks < 0)
-				throw new ArgumentOutOfRangeException("value", "Invalid epoch value.");
+				throw new ArgumentOutOfRangeException(nameof(value), "Invalid epoch value.");
 
 			writer.WriteValue(ticks);
 		}

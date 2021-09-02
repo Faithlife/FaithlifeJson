@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Faithlife.Utility;
 using Newtonsoft.Json;
 
@@ -41,6 +42,6 @@ namespace Faithlife.Json.Converters
 			}
 		}
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => writer.WriteValue(Convert.ToInt64(value));
+		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => writer.WriteValue(Convert.ToInt64(value, CultureInfo.InvariantCulture));
 	}
 }

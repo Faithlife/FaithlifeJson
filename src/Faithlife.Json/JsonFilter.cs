@@ -257,11 +257,11 @@ namespace Faithlife.Json
 		public static string GetPropertyPath<TOwner>(Expression<Func<TOwner, object?>> expression)
 		{
 			if (expression is null)
-				throw new ArgumentNullException("expression");
+				throw new ArgumentNullException(nameof(expression));
 
 			var propertyPath = DoGetPropertyPath(expression.Body);
 			if (propertyPath is null)
-				throw new ArgumentException("Could not determine property path for " + expression, "expression");
+				throw new ArgumentException("Could not determine property path for " + expression, nameof(expression));
 			return propertyPath;
 		}
 
@@ -283,7 +283,7 @@ namespace Faithlife.Json
 		public static string JoinPropertyPaths<TOwner>(params Expression<Func<TOwner, object?>>[] expressions)
 		{
 			if (expressions is null)
-				throw new ArgumentNullException("expressions");
+				throw new ArgumentNullException(nameof(expressions));
 
 			return JoinPaths(expressions.Select(GetPropertyPath));
 		}
@@ -297,7 +297,7 @@ namespace Faithlife.Json
 		public static string JoinExcludedPropertyPaths<TOwner>(params Expression<Func<TOwner, object?>>[] expressions)
 		{
 			if (expressions is null)
-				throw new ArgumentNullException("expressions");
+				throw new ArgumentNullException(nameof(expressions));
 
 			return JoinPaths(expressions.Select(GetExcludedPropertyPath));
 		}
