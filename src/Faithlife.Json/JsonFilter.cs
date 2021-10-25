@@ -476,7 +476,7 @@ namespace Faithlife.Json
 
 			public IEnumerable<string> RenderChildren(string prefix)
 			{
-				foreach (var childNode in m_children.OrderBy(x => x.Key))
+				foreach (var childNode in m_children.OrderBy(x => x.Key, StringComparer.Ordinal))
 				{
 					var fullName = prefix + childNode.Key;
 
