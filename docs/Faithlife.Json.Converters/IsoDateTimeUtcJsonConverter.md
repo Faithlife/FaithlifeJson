@@ -25,7 +25,7 @@ Uses DateTimeUtility.Iso8601Format
 
 ## See Also
 
-* class [JsonConverterBase&lt;T&gt;](JsonConverterBase-1.md)
+* class [JsonConverterBase&lt;T&gt;](./JsonConverterBase-1.md)
 * namespace [Faithlife.Json.Converters](../Faithlife.Json.md)
 * [IsoDateTimeUtcJsonConverter.cs](https://github.com/Faithlife/FaithlifeJson/tree/master/src/Faithlife.Json/Converters/IsoDateTimeUtcJsonConverter.cs)
 

@@ -11,7 +11,8 @@ public sealed class DefaultValueDefaultAttribute : DefaultValueAttribute
 
 | name | description |
 | --- | --- |
-| [DefaultValueDefaultAttribute](DefaultValueDefaultAttribute/DefaultValueDefaultAttribute.md)(…) | Initializes a new instance of the [`DefaultValueDefaultAttribute`](DefaultValueDefaultAttribute.md) class. |
+| [DefaultValueDefaultAttribute](DefaultValueDefaultAttribute/DefaultValueDefaultAttribute.md)(…) | Initializes a new instance of the [`DefaultValueDefaultAttribute`](./DefaultValueDefaultAttribute.md) class. |
+| [Type](DefaultValueDefaultAttribute/Type.md) { get; } | The type. |
 
 ## See Also
 

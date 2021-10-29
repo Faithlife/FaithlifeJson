@@ -1,6 +1,6 @@
 # JsonSettings class
 
-Settings for reading/writing JSON via [`JsonUtility`](JsonUtility.md).
+Settings for reading/writing JSON via [`JsonUtility`](./JsonUtility.md).
 
 ```csharp
 public class JsonSettings

@@ -21,7 +21,7 @@ public class UnixDateTimeConverter : JsonConverterBase<DateTime>
 
 ## See Also
 
-* class [JsonConverterBase&lt;T&gt;](JsonConverterBase-1.md)
+* class [JsonConverterBase&lt;T&gt;](./JsonConverterBase-1.md)
 * namespace [Faithlife.Json.Converters](../Faithlife.Json.md)
 * [UnixDateTimeConverter.cs](https://github.com/Faithlife/FaithlifeJson/tree/master/src/Faithlife.Json/Converters/UnixDateTimeConverter.cs)
 
