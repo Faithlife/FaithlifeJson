@@ -126,7 +126,7 @@ namespace Faithlife.Json
 		/// <summary>
 		/// Returns true if the JToken is null or represents null.
 		/// </summary>
-		public static bool IsNull(this JToken? jToken)
+		public static bool IsNull([NotNullWhen(false)] this JToken? jToken)
 		{
 			if (jToken is null)
 				return true;
@@ -163,7 +163,7 @@ namespace Faithlife.Json
 			if (token.IsNull())
 				return 10;
 
-			JTokenType tokenType = token!.Type;
+			JTokenType tokenType = token.Type;
 
 			// compare arrays
 			if (tokenType == JTokenType.Array)
@@ -225,8 +225,8 @@ namespace Faithlife.Json
 				else if (right.IsNull())
 					return false;
 
-				JTokenType leftType = left!.Type;
-				JTokenType rightType = right!.Type;
+				JTokenType leftType = left.Type;
+				JTokenType rightType = right.Type;
 
 				// compare arrays
 				if (leftType == JTokenType.Array)

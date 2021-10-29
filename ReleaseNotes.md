@@ -1,5 +1,9 @@
 # Release Notes
 
+## 0.7.1
+
+* Improve nullability annotation of `JTokenUtility.IsNull()`.
+
 ## 0.7.0
 
 * Add `netstandard2.1` target framework.
